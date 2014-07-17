@@ -1,0 +1,2 @@
+class FlexitankEstimate < Estimate
+end

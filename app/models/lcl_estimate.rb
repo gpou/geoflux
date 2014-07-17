@@ -1,0 +1,2 @@
+class LclEstimate < Estimate
+end

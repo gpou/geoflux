@@ -1,0 +1,2 @@
+class RoroEstimate < Estimate
+end
