@@ -47,6 +47,7 @@ gem "rvm-capistrano"
 
 gem "haml-rails"
 gem "s3" #required by production_chain
+gem "state_machine"
 gem "production_chain"
 gem "exception_notification"
 

@@ -8,7 +8,7 @@ Geoflux::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.action_mailer.default_url_options = { :host => 'recipe.proves_ovh.com' }
+  config.action_mailer.default_url_options = { :host => 'recipe.geoflux.com' }
   config.action_mailer.smtp_settings = {
    :enable_starttls_auto => false
   }
