@@ -11,10 +11,10 @@ class EstimateRequest < ActiveRecord::Base
     after_transition :on => :dismiss, :do => :set_dismissed_at
     after_transition :on => :select, :do => :set_selected_at
     after_transition :on => :accept, :do => :set_accepted_at
-    event :send
+    event :send do
       transition [:pending] => :sent
     end
-    event :stop_waiting_response
+    event :stop_waiting_response do
       transition [:sent] => :no_response
     end
     event :negociate do
