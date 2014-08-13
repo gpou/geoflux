@@ -51,7 +51,7 @@ gem "state_machine"
 gem "production_chain"
 gem "exception_notification"
 
-
+gem 'bootstrap_form'
 
 group :development, :test do
   gem "thin"

@@ -1,0 +1,15 @@
+-@page_title = "#{t("activerecord.models.estimate_detail", count: 2)} - #{t("activerecord.models.estimate_detail_fcl", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.estimate_detail", count: 2), admin_estimate_details_path, :title => t("activerecord.models.estimate_detail", count: 2)
+  %li.current
+    = t("activerecord.models.estimate_detail_fcl", count: 2)
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        =t("helpers.new", :model => t("activerecord.models.estimate_detail_fcl", :count => 1))
+      .panel-body
+        = bootstrap_form_for @estimate_detail, :url => admin_estimate_details_path(:type => @estimate_type), :layout => :horizontal, :label_col => "col-sm-3", :control_col => "col-sm-9", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+          != render :partial => "#{@estimate_type}_form", :locals => {:f => f}

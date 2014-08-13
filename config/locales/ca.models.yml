@@ -1,0 +1,63 @@
+ca:
+  activerecord:
+    models:
+      estimate_detail:
+        one: 'Pressupost'
+        other: 'Pressupostos'
+      estimate_detail_fcl:
+        one: "FCL"
+        other: "FCL"
+      customer:
+        one: "Client"
+        other: "Clients"
+      port:
+        one: "Port"
+        other: "Ports"
+    attributes:
+      estimate:
+        customer_id: "Client"
+        number_of_items: "Número de contenidors"
+        origin_port_id: "Port de càrrega"
+        destination_port_id: "Port de descàrrega"
+      estimate_detail_fcl:
+        origin: "Lloc de recollida"
+        origin_address: "Adressa"
+        origin_city: "Població"
+        origin_zip: "Codi postal"
+        origin_country_id: "País"
+        destination: "Lloc d'entrega"
+        destination_address: "Adressa"
+        destination_city: "Població"
+        destination_zip: "Codi postal"
+        destination_country_id: "País"
+        description: "Mercaderia"
+        shipment_type: "Enviament"
+        shipment_type_spot: "Puntual"
+        shipment_type_regular: "Regular"
+        shipments_per_month: "Enviaments mensuals"
+        equipment: "Equipament"
+        equipment_20_dv: "20 Estàndard"
+        equipment_20_ot: "20 Open Top"
+        equipment_20_fr: "20 Flat Rack"
+        equipment_20_rf: "20 Reefer"
+        equipment_40_dv: "40 Estàndard"
+        equipment_40_hc: "40 High Cube"
+        equipment_40_ot: "40 Open Top"
+        equipment_40_fr: "40 Flat Rack"
+        equipment_40_rf: "40 Reefer"
+        temperature: "Temperatura"
+        imo: "Mercaderia perillosa"
+        imo_class: "CLASS de imo"
+        imo_un: "UN de imo"
+  helpers:
+    submit:
+      estimate_detail_fclNO:
+        create: "Upload %{model}"
+  placeholders:
+    estimate:
+      origin_port_id: "Tria un port de càrrega"
+      destination_port_id: "Tria un port de descàrrega"
+      customer_id: "Tria un client"
+    estimate_detail_fcl:
+      origin_country_id: "Tria un país de recollida"
+      destination_country_id: "Tria un país d'entrega"

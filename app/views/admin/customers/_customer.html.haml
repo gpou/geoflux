@@ -1,0 +1,12 @@
+%tr
+  %td= customer.email
+  %td= customer.phone
+  %td= customer.company
+  %td= customer.first_name
+  %td= customer.last_name
+  %td.center
+    .btn-group
+      %a.tablectrl_small.bDefault.tipS{:href => edit_admin_customer_path(customer), :title => "Edit"}
+        %span.iconb{"data-icon" => "\356\207\233".force_encoding("UTF-8")}
+      = link_to admin_customer_path(customer), :method => :delete, data: { confirm: 'Voulez-vous vraiment poursuivre cette action ?' }, :class => "tablectrl_small bDefault tipS", :title => "Effacer" do
+        %span.iconb{"data-icon" => "\356\204\266".force_encoding("UTF-8")}

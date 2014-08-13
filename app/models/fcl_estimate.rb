@@ -1,2 +1,0 @@
-class FclEstimate < Estimate
-end

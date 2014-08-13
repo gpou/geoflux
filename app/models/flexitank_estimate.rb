@@ -1,2 +1,0 @@
-class FlexitankEstimate < Estimate
-end

@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716224928) do
+ActiveRecord::Schema.define(version: 20140716214544) do
 
   create_table "carriers", force: true do |t|
     t.string   "name"
+    t.string   "acronym"
+    t.string   "invoice_name"
+    t.string   "invoice_street"
+    t.string   "invoice_city"
+    t.string   "invoice_zip"
+    t.integer  "invoice_country_id"
+    t.string   "invoice_nif"
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -50,23 +57,132 @@ ActiveRecord::Schema.define(version: 20140716224928) do
     t.string   "last_name"
     t.string   "email"
     t.string   "phone"
+    t.string   "invoice_name"
+    t.string   "invoice_street"
+    t.string   "invoice_city"
+    t.string   "invoice_zip"
+    t.integer  "invoice_country_id"
+    t.string   "invoice_nif"
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "estimate_notes", force: true do |t|
-    t.integer  "estimate_id"
-    t.text     "note"
+  create_table "estimate_details_chrt", force: true do |t|
+    t.string   "origin_address"
+    t.string   "origin_city"
+    t.string   "origin_zip"
+    t.integer  "origin_country_id"
+    t.string   "destination_address"
+    t.string   "destination_city"
+    t.string   "destination_zip"
+    t.integer  "destination_country_id"
+    t.boolean  "spot"
+    t.boolean  "regular"
+    t.integer  "shipments_per_month"
+    t.decimal  "weight",                 precision: 10, scale: 0
+    t.text     "description"
+    t.string   "stowage_factor"
+    t.string   "loading_laytime"
+    t.string   "unloading_laytime"
+    t.string   "charterer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "estimate_notes", ["estimate_id"], name: "index_estimate_notes_on_estimate_id", using: :btree
+  create_table "estimate_details_cvnl", force: true do |t|
+    t.string   "origin_address"
+    t.string   "origin_city"
+    t.string   "origin_zip"
+    t.integer  "origin_country_id"
+    t.string   "destination_address"
+    t.string   "destination_city"
+    t.string   "destination_zip"
+    t.integer  "destination_country_id"
+    t.boolean  "items_different_sizes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "estimate_details_fcl", force: true do |t|
+    t.string   "origin_address"
+    t.string   "origin_city"
+    t.string   "origin_zip"
+    t.integer  "origin_country_id"
+    t.string   "destination_address"
+    t.string   "destination_city"
+    t.string   "destination_zip"
+    t.integer  "destination_country_id"
+    t.string   "shipment_type"
+    t.integer  "shipments_per_month"
+    t.string   "equipment"
+    t.text     "description"
+    t.string   "temperature"
+    t.boolean  "imo"
+    t.string   "imo_class"
+    t.string   "imo_un"
+    t.boolean  "oog"
+    t.decimal  "length",                 precision: 10, scale: 0
+    t.decimal  "width",                  precision: 10, scale: 0
+    t.decimal  "height",                 precision: 10, scale: 0
+    t.decimal  "weight",                 precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "estimate_details_fltk", force: true do |t|
+    t.string   "origin_address"
+    t.string   "origin_city"
+    t.string   "origin_zip"
+    t.integer  "origin_country_id"
+    t.string   "destination_address"
+    t.string   "destination_city"
+    t.string   "destination_zip"
+    t.integer  "destination_country_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "estimate_details_lcl", force: true do |t|
+    t.string   "origin_address"
+    t.string   "origin_city"
+    t.string   "origin_zip"
+    t.integer  "origin_country_id"
+    t.string   "destination_address"
+    t.string   "destination_city"
+    t.string   "destination_zip"
+    t.integer  "destination_country_id"
+    t.boolean  "items_different_sizes"
+    t.boolean  "imo"
+    t.string   "imo_class"
+    t.string   "imo_un"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "estimate_details_roro", force: true do |t|
+    t.boolean  "items_different_sizes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "estimate_items", force: true do |t|
+    t.integer  "estimateable_id"
+    t.string   "estimateable_type"
+    t.decimal  "length",            precision: 10, scale: 0
+    t.decimal  "width",             precision: 10, scale: 0
+    t.decimal  "height",            precision: 10, scale: 0
+    t.decimal  "weight",            precision: 10, scale: 0
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "estimate_requests", force: true do |t|
     t.integer  "estimate_id"
     t.integer  "contact_id"
+    t.text     "email_content"
     t.string   "state"
     t.text     "comments"
     t.datetime "sent_at"
@@ -86,19 +202,12 @@ ActiveRecord::Schema.define(version: 20140716224928) do
 
   create_table "estimates", force: true do |t|
     t.integer  "customer_id"
-    t.string   "type"
+    t.integer  "estimateable_id"
+    t.string   "estimateable_type"
     t.string   "state"
     t.integer  "number_of_items"
     t.integer  "origin_port_id"
     t.integer  "destination_port_id"
-    t.string   "origin_address"
-    t.string   "origin_city"
-    t.string   "origin_zip"
-    t.integer  "origin_country_id"
-    t.string   "destination_address"
-    t.string   "destination_city"
-    t.string   "destination_zip"
-    t.integer  "destination_country_id"
     t.text     "comments"
     t.datetime "sent_estimate_requests_at"
     t.datetime "received_estimate_requests_at"
@@ -112,7 +221,6 @@ ActiveRecord::Schema.define(version: 20140716224928) do
   add_index "estimates", ["confirmed_at"], name: "index_estimates_on_confirmed_at", using: :btree
   add_index "estimates", ["customer_id"], name: "index_estimates_on_customer_id", using: :btree
   add_index "estimates", ["state"], name: "index_estimates_on_state", using: :btree
-  add_index "estimates", ["type"], name: "index_estimates_on_type", using: :btree
 
   create_table "journey_contacts", force: true do |t|
     t.integer  "origin_port_id"
@@ -122,7 +230,9 @@ ActiveRecord::Schema.define(version: 20140716224928) do
     t.boolean  "lcl"
     t.boolean  "fcl"
     t.boolean  "roro"
-    t.boolean  "flexitank"
+    t.boolean  "fltk"
+    t.boolean  "cvnl"
+    t.boolean  "chrt"
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -142,35 +252,5 @@ ActiveRecord::Schema.define(version: 20140716224928) do
 
   add_index "ports", ["code"], name: "index_ports_on_code", unique: true, using: :btree
   add_index "ports", ["country_id"], name: "index_ports_on_country_id", using: :btree
-
-  create_table "transports", force: true do |t|
-    t.integer  "estimate_id"
-    t.integer  "customer_id"
-    t.string   "type"
-    t.string   "state"
-    t.integer  "number_of_items"
-    t.integer  "origin_port_id"
-    t.integer  "destination_port_id"
-    t.string   "origin_address"
-    t.string   "origin_city"
-    t.string   "origin_zip"
-    t.integer  "origin_country_id"
-    t.string   "destination_address"
-    t.string   "destination_city"
-    t.string   "destination_zip"
-    t.integer  "destination_country_id"
-    t.text     "comments"
-    t.datetime "started_at"
-    t.datetime "arrived_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "transports", ["arrived_at"], name: "index_transports_on_arrived_at", using: :btree
-  add_index "transports", ["customer_id"], name: "index_transports_on_customer_id", using: :btree
-  add_index "transports", ["estimate_id"], name: "index_transports_on_estimate_id", using: :btree
-  add_index "transports", ["started_at"], name: "index_transports_on_started_at", using: :btree
-  add_index "transports", ["state"], name: "index_transports_on_state", using: :btree
-  add_index "transports", ["type"], name: "index_transports_on_type", using: :btree
 
 end

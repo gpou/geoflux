@@ -1,4 +1,5 @@
 class Port < ActiveRecord::Base
+  default_scope { order('name') } 
   belongs_to :country
 
   validates :country, :presence => true

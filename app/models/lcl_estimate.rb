@@ -1,2 +1,0 @@
-class LclEstimate < Estimate
-end

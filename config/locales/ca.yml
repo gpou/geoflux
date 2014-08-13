@@ -1,4 +1,7 @@
 ca:
+  bool_yes: "Sí"
+  bool_no: "No"
+
   date:
     abbr_day_names:
       - Dg
@@ -123,14 +126,19 @@ ca:
       body: 'Hi ha hagut problemes amb els següents camps:'
       header:
         one: No s'ha pogut desar aquest/a %{model} perquè hi ha 1 error
-        other: No s'ha pogut desar aquest/a %{model} perquè hi ha hagut %{count} errors
+        other: No s'ha pogut desar aquest/a %{model} perquè hi ha %{count} errors
   helpers:
     select:
       prompt: Si us plau tria
     submit:
-      create: Crear %{model}
-      submit: Guardar %{model}
-      update: Actualitzar %{model}
+      create: Crear
+      submit: Guardar
+      update: Actualitzar
+    new: Afegir un/a %{model}
+    edit: Modificar aquest/a %{model}
+    delete: Eliminar aquest/a %{model}
+    confirm_delete: Segur que vols eliminar aquest/a %{model}?
+    close: "Tancar"
   number:
     currency:
       format:
@@ -190,3 +198,4 @@ ca:
       long: '%d de %B de %Y %H:%M'
       short: '%d de %b %H:%M'
     pm: pm
+  home_page: Inici

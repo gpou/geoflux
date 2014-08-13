@@ -1,0 +1,28 @@
+-@page_title = t("activerecord.models.customer", count: 2)
+-content_for :breadcrumb do
+  %li.current
+    = t("activerecord.models.customer", count: 2)
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        = t("activerecord.models.customer", count: 2)
+      .panel-body
+        %ul.middleNavR
+          %li
+            = link_to t("helpers.new"), new_admin_customer_path, :class => "btn btn-info"
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th Email
+              %th Phone
+              %th Company
+              %th First name
+              %th Last name
+              %th Actions
+          %tbody
+            != render :partial => 'customer', :collection => @customers
+
+.clear
+

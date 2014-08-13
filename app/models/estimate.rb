@@ -1,15 +1,16 @@
 class Estimate < ActiveRecord::Base
+  belongs_to :estimateable, :polymorphic => true
+
   belongs_to :customer
   belongs_to :origin_port, :class_name => 'Port'
   belongs_to :destination_port, :class_name => 'Port'
-  belongs_to :origin_country, :class_name => 'Country'
-  belongs_to :destination_country, :class_name => 'Country'
-  has_many :notes
 
-  validates :customer, :presence => true
-  validates :origin_port, :presence => true
-  validates :destination_port, :presence => true
-  
+  validates :customer_id, :presence => true
+  validates :origin_port_id, :presence => true
+  validates :destination_port_id, :presence => true
+
+  validates :number_of_items, :presence => true
+  validates :number_of_items, :numericality => true, :allow_blank => true
 
   state_machine :state, :initial => :pending do
     after_transition :on => :send_estimate_requests, :do => :set_sent_estimate_requests_at
@@ -36,6 +37,17 @@ class Estimate < ActiveRecord::Base
     event :cancel do
       transition [:sent_to_customer, :negociating_with_customer] => :cancelled
     end
+  end
+
+  after_initialize :init_customer
+  after_initialize :defaults
+
+  def init_customer
+    self.build_customer if self.customer.nil?
+  end
+
+  def defaults
+    self.number_of_items ||= 1
   end
 
   def set_sent_estimate_requests_at
