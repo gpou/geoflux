@@ -1,25 +1,68 @@
 ca:
   activerecord:
     models:
-      estimate_detail:
+      estimate:
         one: 'Pressupost'
         other: 'Pressupostos'
-      estimate_detail_fcl:
+      fcl:
         one: "FCL"
         other: "FCL"
+      lcl:
+        one: "LCL"
+        other: "LCL"
       customer:
         one: "Client"
         other: "Clients"
       port:
         one: "Port"
         other: "Ports"
+      country:
+        one: "País"
+        other: "Països"
+      carrier:
+        one: "Companyia"
+        other: "Companyies"
     attributes:
+      carrier:
+        acronym: "Acrònim"
+        name: "Nom"
+        comments: "Comentaris"
+        invoice: "Dades de facturació"
+        invoice_name: "Nom"
+        invoice_nif: "NIF"
+        invoice_street: "Adressa"
+        invoice_city: "Localitat"
+        invoice_zip: "Codi postal"
+        invoice_country_id: "País"
+      country:
+        code: "Codi"
+        name: "Nom"
+        comments: "Comentaris"
+      port:
+        country_id: "País"
+        code: "Codi"
+        name: "Nom"
+        comments: "Comentaris"
+      customer:
+        email: "Email"
+        phone: "Telèfon"
+        company: "Empresa"
+        first_name: "Nom"
+        last_name: "Cognoms"
+        comments: "Comentaris"
+        invoice: "Dades de facturació"
+        invoice_name: "Nom"
+        invoice_nif: "NIF"
+        invoice_street: "Adressa"
+        invoice_city: "Localitat"
+        invoice_zip: "Codi postal"
+        invoice_country_id: "País"
       estimate:
+        created_at: "Data de creació"
+        type: "Tipus"
         customer_id: "Client"
-        number_of_items: "Número de contenidors"
         origin_port_id: "Port de càrrega"
         destination_port_id: "Port de descàrrega"
-      estimate_detail_fcl:
         origin: "Lloc de recollida"
         origin_address: "Adressa"
         origin_city: "Població"
@@ -30,11 +73,13 @@ ca:
         destination_city: "Població"
         destination_zip: "Codi postal"
         destination_country_id: "País"
-        description: "Mercaderia"
         shipment_type: "Enviament"
         shipment_type_spot: "Puntual"
         shipment_type_regular: "Regular"
         shipments_per_month: "Enviaments mensuals"
+        imo: "Mercaderia perillosa"
+        imo_class: "CLASS de imo"
+        imo_un: "UN de imo"
         equipment: "Equipament"
         equipment_20_dv: "20 Estàndard"
         equipment_20_ot: "20 Open Top"
@@ -46,10 +91,39 @@ ca:
         equipment_40_fr: "40 Flat Rack"
         equipment_40_rf: "40 Reefer"
         temperature: "Temperatura"
-        imo: "Mercaderia perillosa"
-        imo_class: "CLASS de imo"
-        imo_un: "UN de imo"
+        items_different_sizes: "Bultos de diferents mides"
+        state: "Estat"
+        states:
+          pending: "Pendent"
+          waiting_estimates: "Esperant pressupostos"
+          analysing: "Analitzant els pressupostos"
+          sent_to_customer: "Enviat al client"
+          negociating_with_customer: "En negociació amb el client"
+          confirmed: "Confirmat"
+          cancelled: "Cancel·lat"
+
+      estimate_item:
+        number_of_items: "Número de bultos"
+        description: "Tipus / Descripció"
+        length: "Longitud"
+        width: "Amplada"
+        height: "Altura"
+        weight: "Pes"
+      fcl/estimate_items:
+        number_of_items: "Núm. de contenidors"
+        description: "Mercaderia"
+      lcl:
+        items: "Bultos"
+        add_items: "Afegir una altra mida de bultos"
+      lcl/estimate_items:
+        number_of_items: "Núm. de bultos"
+        description: "Tipus / Descripció"
+    errors:
+      customer:
+        phone_or_email: "Has d'omplir el telèfon o bé l'email"
+        name_or_company: "Has d'omplir l'empresa o bé el nom o els cognoms"
   helpers:
+    actions: "Accions"
     submit:
       estimate_detail_fclNO:
         create: "Upload %{model}"
@@ -58,6 +132,11 @@ ca:
       origin_port_id: "Tria un port de càrrega"
       destination_port_id: "Tria un port de descàrrega"
       customer_id: "Tria un client"
-    estimate_detail_fcl:
       origin_country_id: "Tria un país de recollida"
       destination_country_id: "Tria un país d'entrega"
+    port:
+      country_id: "Tria un país"
+    customer:
+      invoice_country_id: "Tria un país"
+    carrier:
+      invoice_country_id: "Tria un país"

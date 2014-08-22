@@ -1,0 +1,9 @@
+%tr
+  %td= carrier.acronym
+  %td= carrier.name
+  %td.center
+    .btn-group
+      %a.tablectrl_small.bDefault.tipS{:href => edit_admin_carrier_path(carrier), :title => t("helpers.edit_model_fem", model: t("activerecord.models.carrier", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_carrier_path(carrier), :method => :delete, data: { confirm: t("helpers.confirm_delete_model_fem", model: t("activerecord.models.carrier", count: 1)) }, :class => "tablectrl_small bDefault tipS", :title => t("helpers.delete_model_fem", model: t("activerecord.models.carrier", count: 1)) do
+        %span.glyphicon.glyphicon-remove

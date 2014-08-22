@@ -1,4 +1,6 @@
-body {
-padding-top: 20px;
-padding-bottom: 20px;
-}
+body { padding-top: 20px; padding-bottom: 20px; }
+
+.form-horizontal .form-inline .form-group { margin-left:0; margin-right:0;; display: inline-block; }
+.form-horizontal .form-inline .form-group .form-control { width:100%;}
+
+.panel-heading .btn-group.pull-right{ margin-right: -10px; margin-top: -7px; margin-bottom: -10px; }

@@ -9,11 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require reset.sass
  *= require bootstrap
  *= require navbar
  *= require chosen.min
  *= require bootstrap-chosen
- *= require ui_custom.sass
  *= require bootstrap-dialog
+ *= require dataTables.bootstrap
  */

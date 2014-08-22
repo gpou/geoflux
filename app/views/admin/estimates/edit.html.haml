@@ -1,0 +1,16 @@
+-@page_title = "#{t("activerecord.models.estimate", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.estimate", count: 2), admin_estimates_path, :title => t("activerecord.models.estimate", count: 2)
+  %li.current
+    =t("helpers.edit_a_model", :model => t("activerecord.models.estimate", :count => 1))
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        =t("helpers.edit_a_model", :model => t("activerecord.models.estimate", :count => 1))
+        = "(#{@estimate_type.upcase})"
+      .panel-body
+        = bootstrap_nested_form_for @estimate, :as => :estimate, :url => admin_estimate_path(@estimate), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+          != render :partial => "#{@estimate_type.downcase}_form", :locals => {:f => f}

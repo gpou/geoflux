@@ -134,11 +134,25 @@ ca:
       create: Crear
       submit: Guardar
       update: Actualitzar
-    new: Afegir un/a %{model}
-    edit: Modificar aquest/a %{model}
-    delete: Eliminar aquest/a %{model}
-    confirm_delete: Segur que vols eliminar aquest/a %{model}?
+    new: Afegir
+    edit: Modificar
+    delete: Eliminar
+    confirm_delete: Segur que vols eliminar aquest element?
+    new_model: Afegir un %{model}
+    edit_a_model: Modificar un %{model}
+    edit_model: Modificar aquest %{model}
+    delete_model: Eliminar aquest %{model}
+    confirm_delete_model: Segur que vols eliminar aquest %{model}?
+    new_model_fem: Afegir una %{model}
+    edit_model_fem: Modificar aquesta %{model}
+    delete_model_fem: Eliminar aquesta %{model}
+    confirm_delete_model_fem: Segur que vols eliminar aquesta %{model}?
+    successfully_created: "L'enregistrament s'ha realitzat amb èxit"
+    successfully_updated: "L'actualització s'ha realitzat amb èxit"
+    error_while_creation: "S'ha produït un error"
+    successfully_deleted: "L'element s'ha eliminat correctament"
     close: "Tancar"
+    cancel: "Cancel·lar"
   number:
     currency:
       format:
@@ -194,7 +208,7 @@ ca:
   time:
     am: am
     formats:
-      default: '%A, %d de %B de %Y %H:%M:%S %z'
+      default: '%d-%m-%Y %H:%M'
       long: '%d de %B de %Y %H:%M'
       short: '%d de %b %H:%M'
     pm: pm

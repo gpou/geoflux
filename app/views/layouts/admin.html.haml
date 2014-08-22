@@ -19,42 +19,53 @@
               %span.icon-bar
             = link_to "Geoflux", admin_root_path, :class => "navbar-brand"
           .navbar-collapse.collapse
-            %ul.nav.navbar-nav
-              %li{:class => controller_name=='homes' ? "active" : ""}
-                = link_to "Home", admin_root_path
-              %li
-                %a{:href => "#"} About
-              %li
-                %a{:href => "#"} Contact
-              %li.dropdown{:class => controller_name.match(/^estimate_detail/) ? "active" : ""}
+            %ul.nav.navbar-nav.navbar-right
+              %li{:class => controller_name=='countries' ? "active" : ""}
+                = link_to "Països", admin_countries_path
+              %li{:class => controller_name=='ports' ? "active" : ""}
+                = link_to "Ports", admin_ports_path
+              %li{:class => controller_name=='carriers' ? "active" : ""}
+                = link_to "Companyies", admin_carriers_path
+              %li{:class => controller_name=='customers' ? "active" : ""}
+                = link_to "Clients", admin_customers_path
+              %li.dropdown{:class => controller_name=='estimates' ? "active" : ""}
                 %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown"}
-                  Pressupost
+                  Pressupostos
                   %span.caret
                 %ul.dropdown-menu{:role => :menu}
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='lcl') ? "active" : ""}
-                    = link_to "LCL", new_admin_estimate_detail_path(:type => 'lcl')
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='fcl') ? "active" : ""}
-                    = link_to "FCL", new_admin_estimate_detail_path(:type => 'fcl')
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='roro') ? "active" : ""}
-                    = link_to "RORO", new_admin_estimate_detail_path(:type => 'roro')
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='fltk') ? "active" : ""}
-                    = link_to "FLTK", new_admin_estimate_detail_path(:type => 'fltk')
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='cvnl') ? "active" : ""}
-                    = link_to "CVNL", new_admin_estimate_detail_path(:type => 'cvnl')
-                  %li{:class => (controller_name=='estimate_details' and params[:type]=='chrt') ? "active" : ""}
-                    = link_to "CHRT", new_admin_estimate_detail_path(:type => 'chrt')
-
-            %ul.nav.navbar-nav.navbar-right
-              %li.active
-                %a{:href=>"#"} Default
-              %li
-                %a{:href=>"#"} Static top
-              %li
-                %a{:href=>"#"} Fixed top
+                  %li{:class => (controller_name=='estimates' and action_name=='index') ? "active" : ""}
+                    = link_to "Pressupostos", admin_estimates_path
+                  %li.divider
+                  %li{:class => (controller_name=='estimates' and params[:type]=='lcl') ? "active" : ""}
+                    = link_to "LCL", new_admin_estimate_path(:type => 'lcl')
+                  %li{:class => (controller_name=='estimates' and params[:type]=='fcl') ? "active" : ""}
+                    = link_to "FCL", new_admin_estimate_path(:type => 'fcl')
+                  %li{:class => (controller_name=='estimates' and params[:type]=='roro') ? "active" : ""}
+                    = link_to "RORO", new_admin_estimate_path(:type => 'roro')
+                  %li{:class => (controller_name=='estimates' and params[:type]=='fltk') ? "active" : ""}
+                    = link_to "FLTK", new_admin_estimate_path(:type => 'fltk')
+                  %li{:class => (controller_name=='estimates' and params[:type]=='cvnl') ? "active" : ""}
+                    = link_to "CVNL", new_admin_estimate_path(:type => 'cvnl')
+                  %li{:class => (controller_name=='estimates' and params[:type]=='chrt') ? "active" : ""}
+                    = link_to "CHRT", new_admin_estimate_path(:type => 'chrt')
       %ol.breadcrumb
         %li{ :class => yield(:breadcrumb).empty? ? "current" : ""}
           %a{:href => admin_root_path}= t("home_page")
         = yield :breadcrumb
+
+      -if flash[:success] || flash[:notice] || flash[:error] || flash[:alert]
+        - if flash[:success]
+          .alert.alert-success
+            %p!= flash[:success]
+        - if flash[:notice]
+          .alert.alert-info
+            %p!= flash[:notice]
+        - if flash[:error]
+          .alert.alert-danger
+            %p!= flash[:error]
+        - if flash[:alert]
+          .alert.alert-warning
+            %p!= flash[:alert]
 
       = yield
 

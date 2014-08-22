@@ -1,0 +1,9 @@
+= f.alert_message flash[:error]
+
+= f.text_field :code
+= f.text_field :name
+= f.text_area :comments
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_countries_path, :class => "btn btn-default"

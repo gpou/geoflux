@@ -7,20 +7,22 @@
   .col-lg-12
     .panel.panel-default
       .panel-heading
-        = t("activerecord.models.customer", count: 2)
+        .btn-group.pull-right
+          = link_to new_admin_customer_path, :class => "btn btn-info btn-sm" do
+            %span.glyphicon.glyphicon-plus
+            = t("helpers.new_model", model: t("activerecord.models.customer", count: 1))
+        %h3.panel-title= t("activerecord.models.customer", count: 2)
+        .clearfix
       .panel-body
-        %ul.middleNavR
-          %li
-            = link_to t("helpers.new"), new_admin_customer_path, :class => "btn btn-info"
-        %table.table.table-striped.table-hover.table-condensed
+        %table.table.table-hover.table-condensed.datatable
           %thead
             %tr
-              %th Email
-              %th Phone
-              %th Company
-              %th First name
-              %th Last name
-              %th Actions
+              %th= t("activerecord.attributes.customer.email")
+              %th= t("activerecord.attributes.customer.phone")
+              %th= t("activerecord.attributes.customer.company")
+              %th= t("activerecord.attributes.customer.first_name")
+              %th= t("activerecord.attributes.customer.last_name")
+              %th= t("helpers.actions")
           %tbody
             != render :partial => 'customer', :collection => @customers
 

@@ -1,0 +1,27 @@
+-@page_title = t("activerecord.models.carrier", count: 2)
+-content_for :breadcrumb do
+  %li.current
+    = t("activerecord.models.carrier", count: 2)
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        .btn-group.pull-right
+          = link_to new_admin_carrier_path, :class => "btn btn-info btn-sm" do
+            %span.glyphicon.glyphicon-plus
+            = t("helpers.new_model_fem", model: t("activerecord.models.carrier", count: 1))
+        %h3.panel-title= t("activerecord.models.carrier", count: 2)
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.datatable
+          %thead
+            %tr
+              %th= t("activerecord.attributes.carrier.acronym")
+              %th= t("activerecord.attributes.carrier.name")
+              %th= t("helpers.actions")
+          %tbody
+            != render :partial => 'carrier', :collection => @carriers
+
+.clear
+

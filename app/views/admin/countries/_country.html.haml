@@ -1,0 +1,9 @@
+%tr
+  %td= country.code
+  %td= country.name
+  %td.center
+    .btn-group
+      %a.tablectrl_small.bDefault.tipS{:href => edit_admin_country_path(country), :title => t("helpers.edit_model", model: t("activerecord.models.country", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_country_path(country), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.country", count: 1)) }, :class => "tablectrl_small bDefault tipS", :title => t("helpers.delete_model", model: t("activerecord.models.country", count: 1)) do
+        %span.glyphicon.glyphicon-remove

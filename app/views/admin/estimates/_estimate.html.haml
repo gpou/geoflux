@@ -1,0 +1,13 @@
+%tr
+  %td= l(estimate.created_at)
+  %td= estimate.type.upcase
+  %td= estimate.customer.full_name
+  %td= estimate.origin_port.name
+  %td= estimate.destination_port.name
+  %td= t(estimate.state, :scope => "activerecord.attributes.estimate.states")
+  %td.center
+    .btn-group
+      %a.tablectrl_small.bDefault.tipS{:href => edit_admin_estimate_path(estimate), :title => t("helpers.edit_model", model: t("activerecord.models.estimate", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_estimate_path(estimate), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.estimate", count: 1)) }, :class => "tablectrl_small bDefault tipS", :title => t("helpers.delete_model", model: t("activerecord.models.estimate", count: 1)) do
+        %span.glyphicon.glyphicon-remove

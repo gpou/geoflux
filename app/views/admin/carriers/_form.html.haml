@@ -1,0 +1,41 @@
+= f.alert_message flash[:error]
+
+= f.text_field :acronym
+= f.text_field :name
+
+
+= f.static_control :invoice, append: link_to("...", "#invoice_modal", class: "btn btn-info", :role=>"button", :"data-toggle" => "modal"), :id => "invoice_full_input"
+#invoice_modal.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+        %h4.modal-title= t("activerecord.attributes.carrier.invoice")
+      .modal-body
+        = f.text_field :invoice_name, :id => "invoice_name_input"
+        = f.text_field :invoice_nif, :id => "invoice_nif_input"
+        = f.text_field :invoice_street, :id => "invoice_street_input"
+        = f.text_field :invoice_city, :id => "invoice_city_input"
+        = f.text_field :invoice_zip, :id => "invoice_zip_input"
+        = f.collection_select :invoice_country_id, Country.order(:name), :id, :name, {include_blank: ''}, {:"data-placeholder"=> t("placeholders.carrier.invoice_country_id"), :id => "invoice_country_input"}
+      .modal-footer
+        %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
+        %button{:type=>"button", :class=>"btn btn-success"}= t("helpers.submit.submit")
+
+= f.text_area :comments
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_carriers_path, :class => "btn btn-default"
+
+
+:javascript
+  $(function() {
+    $("#invoice_modal .btn-success").click(function(){
+      var country = $('#invoice_country_input option:selected').text() 
+      txt = $("#invoice_name_input").val()+" - "+$("#invoice_nif_input").val()+" - "+$("#invoice_street_input").val()+" "+$("#invoice_zip_input").val()+" "+$("#invoice_city_input").val()
+      if (country!="") txt += " ("+country+")";
+      $("#invoice_full_input").html(txt);
+      $("#invoice_modal").modal('hide'); 
+    })
+  })

@@ -12,7 +12,9 @@
 //
 //= require jquery-1.7.min
 //= require jquery_ujs
+//= require jquery_nested_form
 //= require bootstrap
 //= require chosen.jquery.min
-//= require jquery-ui-1.8.min
+//= require jquery.dataTables.min
+//= require dataTables.bootstrap
 //= require functions

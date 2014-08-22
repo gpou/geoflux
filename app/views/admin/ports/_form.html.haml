@@ -1,0 +1,10 @@
+= f.alert_message flash[:error]
+
+= f.collection_select :country_id, Country.order(:name), :id, :name, {include_blank: '', append: link_to("...", admin_countries_path, class: "btn btn-info", title: t("activerecord.models.country", count: 2))}, {:"data-placeholder"=> t("placeholders.port.country_id")}
+= f.text_field :code
+= f.text_field :name
+= f.text_area :comments
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_ports_path, :class => "btn btn-default"
