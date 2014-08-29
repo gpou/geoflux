@@ -10,6 +10,18 @@ ca:
       lcl:
         one: "LCL"
         other: "LCL"
+      roro:
+        one: "RORO"
+        other: "RORO"
+      fltk:
+        one: "FLTK"
+        other: "FLTK"
+      cvnl:
+        one: "CVNL"
+        other: "CVNL"
+      chrt:
+        one: "CHRT"
+        other: "CHRT"
       customer:
         one: "Client"
         other: "Clients"
@@ -91,6 +103,10 @@ ca:
         equipment_40_fr: "40 Flat Rack"
         equipment_40_rf: "40 Reefer"
         temperature: "Temperatura"
+        stowage_factor: "Factor d'estiba"
+        loading_laytime: "Temps de càrrega"
+        unloading_laytime: "Temps de descàrrega"
+        charterer: "Fletador"
         items_different_sizes: "Bultos de diferents mides"
         state: "Estat"
         states:
@@ -118,6 +134,29 @@ ca:
       lcl/estimate_items:
         number_of_items: "Núm. de bultos"
         description: "Tipus / Descripció"
+      roro:
+        items: "Vehicles"
+        add_items: "Afegir un altre grup de vehicles"
+      roro/estimate_items:
+        number_of_items: "Núm. de vehicles"
+        description: "Marca i model o descripció"
+      fltk:
+        items: "Bultos"
+      fltk/estimate_items:
+        number_of_items: "Núm. de bultos"
+        description: "Descripció de la mercaderia"
+      cvnl:
+        items: "Bultos"
+        add_items: "Afegir una altra mida de bultos"
+      cvnl/estimate_items:
+        number_of_items: "Núm. de bultos"
+        description: "Descripció de la mercaderia"
+      chrt:
+        items: "Bultos"
+      chrt/estimate_items:
+        number_of_items: "Núm. de bultos"
+        description: "Descripció de la mercaderia"
+        weight: "Pes de la mercaderia"
     errors:
       customer:
         phone_or_email: "Has d'omplir el telèfon o bé l'email"

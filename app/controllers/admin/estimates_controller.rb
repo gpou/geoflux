@@ -36,6 +36,13 @@ class Admin::EstimatesController < Admin::AdminController
     end
   end
 
+  def destroy
+    if @estimate.destroy
+      flash[:success] = t("helpers.successfully_deleted")
+    end
+    redirect_to admin_estimates_path
+  end
+
 
   private
 

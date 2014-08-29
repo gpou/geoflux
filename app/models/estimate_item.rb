@@ -5,7 +5,7 @@ class EstimateItem < ActiveRecord::Base
 
   # GENERIC VALIDATIONS ******************************************
 
-  validates :number_of_items, :presence => true
+  validates :number_of_items, :presence => true, :if => lambda { |e| !e.estimate.is_a?(Fltk) and !e.estimate.is_a?(Chrt) }
   validates :number_of_items, :numericality => true, :allow_blank => true
   validates :description, :presence => true
 

@@ -1,0 +1,19 @@
+= f.alert_message flash[:error]
+= f.collection_select :customer_id, Customer.order(:email), :id, :full_name, {include_blank: '', append: link_to("...", admin_customers_path, class: "btn btn-info", title: t("activerecord.models.customer", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.customer_id")}
+= f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
+= f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
+= f.form_group :items, label: { text: t("activerecord.attributes.cvnl.items") } do
+  = f.fields_for :estimate_items, :layout => :inline do |ff|
+    .form-inline.form-items.form-group{:style => "margin-left:0; margin-right:0;"}
+      = ff.text_field :number_of_items, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.cvnl/estimate_items.number_of_items")
+      = ff.text_field :description, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.cvnl/estimate_items.description")
+      = ff.text_field :length, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.length")
+      = ff.text_field :width, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.width")
+      = ff.text_field :height, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.height")
+      = ff.text_field :weight, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.weight")
+      = ff.link_to_remove class: "btn btn-info pull-right", title: t("helpers.delete") do
+        %span.glyphicon.glyphicon-remove
+  = f.link_to_add t("activerecord.attributes.cvnl.add_items"), :estimate_items
+
+= f.form_group do
+  = f.submit

@@ -1,0 +1,10 @@
+= f.alert_message flash[:error]
+= f.collection_select :customer_id, Customer.order(:email), :id, :full_name, {include_blank: '', append: link_to("...", admin_customers_path, class: "btn btn-info", title: t("activerecord.models.customer", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.customer_id")}
+= f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
+= f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
+= f.fields_for :estimate_items do |ff|
+  = ff.text_field :number_of_items, :label => t("activerecord.attributes.fltk/estimate_items.number_of_items")
+  = ff.text_area :description, :label => t("activerecord.attributes.fltk/estimate_items.description")
+
+= f.form_group do
+  = f.submit
