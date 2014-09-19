@@ -14,7 +14,7 @@
         %h3.panel-title= t("activerecord.models.customer", count: 2)
         .clearfix
       .panel-body
-        %table.table.table-hover.table-condensed.datatable
+        %table.table.table-hover.table-condensed.table-bordered.datatable
           %thead
             %tr
               %th= t("activerecord.attributes.customer.email")
@@ -22,7 +22,7 @@
               %th= t("activerecord.attributes.customer.company")
               %th= t("activerecord.attributes.customer.first_name")
               %th= t("activerecord.attributes.customer.last_name")
-              %th= t("helpers.actions")
+              %th.text-center= t("helpers.actions")
           %tbody
             != render :partial => 'customer', :collection => @customers
 

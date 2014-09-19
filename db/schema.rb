@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716214544) do
+ActiveRecord::Schema.define(version: 20140918083947) do
 
   create_table "carriers", force: true do |t|
     t.string   "name"
@@ -114,17 +114,27 @@ ActiveRecord::Schema.define(version: 20140716214544) do
     t.string   "origin_address"
     t.string   "origin_city"
     t.string   "origin_zip"
+    t.string   "origin_province"
     t.integer  "origin_country_id"
     t.string   "destination_address"
     t.string   "destination_city"
     t.string   "destination_zip"
+    t.string   "destination_province"
     t.integer  "destination_country_id"
     t.boolean  "imo"
     t.string   "imo_class"
     t.string   "imo_un"
     t.string   "shipment_type"
     t.integer  "shipments_per_month"
-    t.string   "equipment"
+    t.boolean  "equipment_20_dv"
+    t.boolean  "equipment_20_ot"
+    t.boolean  "equipment_20_rf"
+    t.boolean  "equipment_20_fr"
+    t.boolean  "equipment_40_dv"
+    t.boolean  "equipment_40_hc"
+    t.boolean  "equipment_40_ot"
+    t.boolean  "equipment_40_rf"
+    t.boolean  "equipment_40_fr"
     t.string   "temperature"
     t.boolean  "oog"
     t.string   "stowage_factor"
@@ -147,6 +157,25 @@ ActiveRecord::Schema.define(version: 20140716214544) do
   add_index "estimates", ["origin_port_id"], name: "index_estimates_on_origin_port_id", using: :btree
   add_index "estimates", ["state"], name: "index_estimates_on_state", using: :btree
   add_index "estimates", ["type"], name: "index_estimates_on_type", using: :btree
+
+  create_table "journey_contacts", force: true do |t|
+    t.integer  "origin_port_id"
+    t.integer  "destination_port_id"
+    t.integer  "contact_id"
+    t.boolean  "reefer"
+    t.boolean  "lcl"
+    t.boolean  "fcl"
+    t.boolean  "roro"
+    t.boolean  "fltk"
+    t.boolean  "cvnl"
+    t.boolean  "chrt"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "journey_contacts", ["destination_port_id"], name: "index_journey_contacts_on_destination_port_id", using: :btree
+  add_index "journey_contacts", ["origin_port_id"], name: "index_journey_contacts_on_origin_port_id", using: :btree
 
   create_table "ports", force: true do |t|
     t.integer  "country_id"

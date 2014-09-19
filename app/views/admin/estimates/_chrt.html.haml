@@ -1,0 +1,49 @@
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.customer_id")
+  .col-sm-8
+    .form-control= @estimate.customer
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin_port_id")
+  .col-sm-8
+    .form-control= @estimate.origin_port
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
+  .col-sm-8
+    .form-control= @estimate.destination_port
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.shipment_type")
+  .col-sm-8
+    .form-control= t("activerecord.attributes.estimate.shipment_type_#{@estimate.shipment_type}")
+- if @estimate.shipment_type=="regular"
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.shipments_per_month")
+    .col-sm-8
+      .form-control= @estimate.shipments_per_month
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.chrt/estimate_items.number_of_items")
+  .col-sm-8
+    .form-control= @estimate.estimate_items.first.number_of_items
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.weight")
+  .col-sm-8
+    .form-control= @estimate.estimate_items.first.weight
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.chrt/estimate_items.description")
+  .col-sm-8
+    .form-control.text= @estimate.estimate_items.first.description.gsub(/\n/, '<br>').html_safe
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.stowage_factor")
+  .col-sm-8
+    .form-control= @estimate.stowage_factor
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.loading_laytime")
+  .col-sm-8
+    .form-control= @estimate.loading_laytime
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.unloading_laytime")
+  .col-sm-8
+    .form-control= @estimate.unloading_laytime
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.charterer")
+  .col-sm-8
+    .form-control= @estimate.charterer

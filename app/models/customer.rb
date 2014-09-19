@@ -50,4 +50,13 @@ class Customer < ActiveRecord::Base
   def full_name
     "#{email} #{company} #{last_name} #{first_name}"
   end
+
+  def to_s
+    if !company.blank?
+      company
+    else
+      email
+    end
+  end
+
 end

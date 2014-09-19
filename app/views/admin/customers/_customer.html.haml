@@ -4,9 +4,9 @@
   %td= customer.company
   %td= customer.first_name
   %td= customer.last_name
-  %td.center
-    .btn-group
-      %a.tablectrl_small.bDefault.tipS{:href => edit_admin_customer_path(customer), :title => t("helpers.edit_model", model: t("activerecord.models.carrier", count: 1))}
+  %td.text-center
+    .btn-group.btn-group-xs
+      %a.tablectrl_small.btn.btn-default.tipS{:href => edit_admin_customer_path(customer), :title => t("helpers.edit_model", model: t("activerecord.models.carrier", count: 1))}
         %span.glyphicon.glyphicon-pencil
-      = link_to admin_customer_path(customer), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.customer", count: 1)) }, :class => "tablectrl_small bDefault tipS", :title => t("helpers.delete_model", model: t("activerecord.models.customer", count: 1)) do
+      = link_to admin_customer_path(customer), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.customer", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.customer", count: 1)) do
         %span.glyphicon.glyphicon-remove

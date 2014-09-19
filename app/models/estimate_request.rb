@@ -2,6 +2,8 @@ class EstimateRequest < ActiveRecord::Base
   belongs_to :estimate
   belongs_to :contact
 
+  delegate :carrier, :to => :contact
+  
   validates :estimate, :presence => true
   validates :contact, :presence => true
 

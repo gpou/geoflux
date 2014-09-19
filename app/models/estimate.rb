@@ -14,6 +14,8 @@ class Estimate < ActiveRecord::Base
   belongs_to :origin_country, :class_name => 'Country'
   belongs_to :destination_country, :class_name => 'Country'
 
+  has_many :estimate_requests, :dependent => :destroy
+
   has_many :estimate_items, :dependent => :destroy, :before_add => :set_items_parent, :autosave => true
   accepts_nested_attributes_for :estimate_items, :allow_destroy => :true
   def set_items_parent(item)
@@ -27,6 +29,38 @@ class Estimate < ActiveRecord::Base
   validates :customer_id, :presence => true
   validates :origin_port_id, :presence => true
   validates :destination_port_id, :presence => true
+  #validate :origin_complete
+  #validate :destination_complete
+
+  def origin_complete
+    if not origin_address.present?
+      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_address")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not origin_zip.present?
+      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_zip")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not origin_city.present?
+      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_city")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not origin_country_id.present?
+      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_country_id")} #{I18n.t("errors.messages.blank")}")
+    end
+  end
+  
+  def destination_complete
+    if not destination_address.present?
+      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_address")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not destination_zip.present?
+      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_zip")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not destination_city.present?
+      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_city")} #{I18n.t("errors.messages.blank")}")
+    end
+    if not destination_country_id.present?
+      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_country_id")} #{I18n.t("errors.messages.blank")}")
+    end
+  end
 
 
   # STATE MACHINE ******************************************
@@ -113,11 +147,15 @@ class Estimate < ActiveRecord::Base
   # PUBLIC METHODS ******************************************
 
   def origin
-    "#{origin_address} #{origin_zip} #{origin_city} #{origin_country ? "(#{origin_country.name})" : ""}"
+    "#{origin_address} #{origin_zip} #{origin_city} #{origin_province ? " - #{origin_province}" : ""} #{origin_country ? "(#{origin_country.name})" : ""}"
   end
 
   def destination
-    "#{destination_address} #{destination_zip} #{destination_city} #{destination_country ? "(#{destination_country.name})" : ""}"
+    "#{destination_address} #{destination_zip} #{destination_city} #{destination_province ? " - #{destination_province}" : ""} #{destination_country ? "(#{destination_country.name})" : ""}"
+  end
+
+  def build_email_content
+    "PENDENT"
   end
 
 end

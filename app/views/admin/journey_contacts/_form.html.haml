@@ -1,0 +1,19 @@
+= f.alert_message flash[:error]
+
+= f.static_control :carrier, :class => "uneditable-input"
+= f.static_control :contact, :class => "uneditable-input"
+= f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
+= f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
+= f.form_group :estimate_types, :label => { text: t("activerecord.attributes.journey_contact.estimate_types")} do
+  = f.check_box :lcl
+  = f.check_box :fcl
+  = f.check_box :roro
+  = f.check_box :fltk
+  = f.check_box :cvnl
+  = f.check_box :chrt
+  = f.check_box :reefer
+= f.text_area :comments
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_carrier_contacts_path(@carrier), :class => "btn btn-default"

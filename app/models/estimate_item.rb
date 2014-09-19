@@ -24,11 +24,11 @@ class EstimateItem < ActiveRecord::Base
 
   # FCL VALIDATIONS ******************************************
 
-  validates :length, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and (e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr") }
-  validates :length, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and (e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr") }
-  validates :width, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and (e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr") }
-  validates :width, :numericality => true, :allow_blank => true, :if => lambda { |e| (e.estimate.is_a?(Fcl) and e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr") }
-  validates :height, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and (e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr" or e.estimate.equipment=="20_ot" or e.estimate.equipment=="40_ot") }
-  validates :height, :numericality => true, :allow_blank => true, :if => lambda { |e| (e.estimate.is_a?(Fcl) and e.estimate.equipment=="20_fr" or e.estimate.equipment=="40_fr" or e.estimate.equipment=="20_ot" or e.estimate.equipment=="40_ot") }
+  validates :length, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
+  validates :length, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
+  validates :width, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
+  validates :width, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
+  validates :height, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr or e.estimate.equipment_20_ot or e.estimate.equipment_40_ot) }
+  validates :height, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr or e.estimate.equipment_20_ot or e.estimate.equipment_40_ot) }
 
 end

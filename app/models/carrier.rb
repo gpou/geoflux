@@ -1,6 +1,8 @@
 class Carrier < ActiveRecord::Base
 
   has_many :contacts
+  has_many :journey_contacts, :through => :contacts
+  has_many :estimate_requests, :through => :contacts
   belongs_to :invoice_country, :class_name => 'Country'
 
   validates :acronym, :presence => true
@@ -32,6 +34,10 @@ class Carrier < ActiveRecord::Base
 
   def invoice
     "#{invoice_name} - #{invoice_nif} - #{invoice_street} #{invoice_zip} #{invoice_city} #{invoice_country ? "(#{invoice_country.name})" : ""}"
+  end
+
+  def to_s
+    acronym
   end
 
 end

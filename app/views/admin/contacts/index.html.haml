@@ -1,0 +1,34 @@
+-@page_title = t("activerecord.models.contact", count: 2)
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.carrier", count: 2), admin_carriers_path, :title => t("activerecord.models.carrier", count: 2)
+  %li
+    = link_to @carrier.acronym, admin_carrier_path(@carrier)
+  %li.current
+    = t("activerecord.models.contact", count: 2)
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        .btn-group.pull-right
+          = link_to new_admin_carrier_contact_path(@carrier), :class => "btn btn-info btn-sm" do
+            %span.glyphicon.glyphicon-plus
+            = t("helpers.new_model", model: t("activerecord.models.contact", count: 1))
+        %h3.panel-title= "#{@carrier.acronym} - #{t("activerecord.models.contact", count: 2)}"
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable
+          %thead
+            %tr
+              %th= t("activerecord.attributes.contact.email")
+              %th= t("activerecord.attributes.contact.first_name")
+              %th= t("activerecord.attributes.contact.last_name")
+              %th= t("activerecord.attributes.contact.phone")
+              %th= t("activerecord.attributes.contact.jourey_contacts_count")
+              %th.text-center= t("helpers.actions")
+          %tbody
+            != render :partial => 'contact', :collection => @contacts
+
+.clear
+

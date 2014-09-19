@@ -34,6 +34,15 @@ ca:
       carrier:
         one: "Companyia"
         other: "Companyies"
+      contact:
+        one: "Contacte"
+        other: "Contactes"
+      journey_contact:
+        one: "Trajecte"
+        other: "Trajectes"
+      estimate_request:
+        one: "Demanda de pressupost"
+        other: "Demandes de pressupost"
     attributes:
       carrier:
         acronym: "Acrònim"
@@ -46,6 +55,28 @@ ca:
         invoice_city: "Localitat"
         invoice_zip: "Codi postal"
         invoice_country_id: "País"
+      contact:
+        email: "Email"
+        first_name: "Nom"
+        last_name: "Cognoms"
+        phone: "Telèfon"
+        comments: "Comentaris"
+        jourey_contacts_count: "Núm. trajectes"
+      journey_contact:
+        carrier: "Companyia"
+        contact: "Contacte"
+        contact_id: "Contacte"
+        origin_port_id: "Port d'orígen"
+        destination_port_id: "Port de destí"
+        comments: "Comentaris"
+        estimate_types: "Tipus de pressupost"
+        lcl: "LCL"
+        fcl: "FCL"
+        roro: "RORO"
+        fltk: "FLTK"
+        cvnl: "CVNL"
+        chrt: "CHRT"
+        reefer: "Temperatura"
       country:
         code: "Codi"
         name: "Nom"
@@ -70,7 +101,8 @@ ca:
         invoice_zip: "Codi postal"
         invoice_country_id: "País"
       estimate:
-        created_at: "Data de creació"
+        created_at: "Creat"
+        updated_at: "Actualitzat"
         type: "Tipus"
         customer_id: "Client"
         origin_port_id: "Port de càrrega"
@@ -79,11 +111,13 @@ ca:
         origin_address: "Adressa"
         origin_city: "Població"
         origin_zip: "Codi postal"
+        origin_province: "Província"
         origin_country_id: "País"
         destination: "Lloc d'entrega"
         destination_address: "Adressa"
         destination_city: "Població"
         destination_zip: "Codi postal"
+        destination_province: "Província"
         destination_country_id: "País"
         shipment_type: "Enviament"
         shipment_type_spot: "Puntual"
@@ -102,6 +136,7 @@ ca:
         equipment_40_ot: "40 Open Top"
         equipment_40_fr: "40 Flat Rack"
         equipment_40_rf: "40 Reefer"
+        oog: "Contenidor sobredimensionat"
         temperature: "Temperatura"
         stowage_factor: "Factor d'estiba"
         loading_laytime: "Temps de càrrega"
@@ -117,6 +152,7 @@ ca:
           negociating_with_customer: "En negociació amb el client"
           confirmed: "Confirmat"
           cancelled: "Cancel·lat"
+        estimate_requests_count: "Núm. pressupostos"
 
       estimate_item:
         number_of_items: "Número de bultos"
@@ -157,6 +193,25 @@ ca:
         number_of_items: "Núm. de bultos"
         description: "Descripció de la mercaderia"
         weight: "Pes de la mercaderia"
+
+      estimate_request:
+        created_at: "Creat"
+        updated_at: "Actualitzat"
+        carrier: "Companyia"
+        contact: "Contacte"
+        estimate: "Pressupost"
+        email_content: "Contingut del mail"
+        state: "Estat"
+        states:
+          pending: "Pendent"
+          sent: "Enviat a la companyia"
+          negociating: "En negociació"
+          analysing: "Analitzant el pressupost"
+          selected: "Sel·leccionat"
+          accepted: "Acceptat"
+          no_response: "Sense resposta"
+          dismissed: "Rebutjat"
+
     errors:
       customer:
         phone_or_email: "Has d'omplir el telèfon o bé l'email"

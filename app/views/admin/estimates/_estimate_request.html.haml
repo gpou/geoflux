@@ -1,0 +1,15 @@
+%tr
+  %td.estimate_request_carrier= estimate_request.carrier
+  %td.estimate_request_contact= estimate_request.contact
+  %td.estimate_request_state= t(estimate_request.state, :scope => "activerecord.attributes.estimate_request.states")
+  %td.text-center
+    .btn-group.btn-group-xs
+      %a.tablectrl_small.btn.btn-default.tipS{:href => "#estimate_request", :title => t("helpers.view_model", model: t("activerecord.models.estimate_request", count: 1)), :"data-toggle" => "modal"}
+        %span.glyphicon.glyphicon-eye-open
+      %a.tablectrl_small.btn.btn-default.tipS{:href => edit_admin_estimate_estimate_request_path(@estimate, estimate_request), :title => t("helpers.edit_model", model: t("activerecord.models.estimate_request", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_estimate_estimate_request_path(@estimate, estimate_request), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.estimate_request", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.estimate_request", count: 1)) do
+        %span.glyphicon.glyphicon-remove
+  %td.estimate_request_created_at= estimate_request.created_at
+  %td.estimate_request_updated_at= estimate_request.updated_at
+  %td.estimate_request_email_content= estimate_request.email_content.gsub(/\n/, '<br>')

@@ -1,6 +1,6 @@
 class Admin::CarriersController < Admin::AdminController
 
-  before_filter :find_model, :only => %w( edit update destroy)
+  before_filter :find_model, :only => %w( show edit update destroy)
 
   
   def index
@@ -21,6 +21,9 @@ class Admin::CarriersController < Admin::AdminController
     end
   end
   
+  def show
+  end
+
   def edit
   end
   

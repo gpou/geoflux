@@ -1,0 +1,19 @@
+-@page_title = "#{t("activerecord.models.contact", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.carrier", count: 2), admin_carriers_path, :title => t("activerecord.models.carrier", count: 2)
+  %li
+    = link_to @carrier.acronym, admin_carrier_path(@carrier)
+  %li
+    = link_to t("activerecord.models.contact", count: 2), admin_carrier_contacts_path, :title => t("activerecord.models.contact", count: 2)
+  %li.current
+    =t("helpers.new_model", :model => t("activerecord.models.contact", :count => 1))
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title= "#{@carrier.acronym} - #{t("helpers.new_model", :model => t("activerecord.models.contact", :count => 1))}"
+      .panel-body
+        = bootstrap_nested_form_for @contact, :url => admin_carrier_contacts_path, :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+          != render :partial => "form", :locals => {:f => f}

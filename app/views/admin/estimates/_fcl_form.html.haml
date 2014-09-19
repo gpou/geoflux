@@ -13,6 +13,7 @@
         = f.text_field :origin_address, :id => "origin_address_input"
         = f.text_field :origin_city, :id => "origin_city_input"
         = f.text_field :origin_zip, :id => "origin_zip_input"
+        = f.text_field :origin_province, :id => "origin_province_input"
         = f.collection_select :origin_country_id, Country.order(:name), :id, :name, {include_blank: ''}, {:"data-placeholder"=> t("placeholders.estimate.origin_country_id"), :id => "origin_country_input"}
       .modal-footer
         %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
@@ -28,6 +29,7 @@
         = f.text_field :destination_address, :id => "destination_address_input"
         = f.text_field :destination_city, :id => "destination_city_input"
         = f.text_field :destination_zip, :id => "destination_zip_input"
+        = f.text_field :destination_province, :id => "destination_province_input"
         = f.collection_select :destination_country_id, Country.order(:name), :id, :name, {include_blank: ''}, {:"data-placeholder"=> t("placeholders.estimate.destination_country_id"), :id => "destination_country_input"}
       .modal-footer
         %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
@@ -37,17 +39,20 @@
   = f.radio_button :shipment_type, "regular", label: t("activerecord.attributes.estimate.shipment_type_regular"), inline: true, class: "shipment_type", :checked => f.object.shipment_type=='regular'
 = f.text_field :shipments_per_month, id: "shipments_per_month"
 = f.form_group :equipment, label: { text: t("activerecord.attributes.estimate.equipment") } do
-  = f.radio_button :equipment, "20_dv", label: t("activerecord.attributes.estimate.equipment_20_dv"), inline: true, :checked => f.object.equipment=="20_dv", class: "equipment"
-  = f.radio_button :equipment, "20_ot", label: t("activerecord.attributes.estimate.equipment_20_ot"), inline: true, :checked => f.object.equipment=="20_ot", class: "equipment"
-  = f.radio_button :equipment, "20_rf", label: t("activerecord.attributes.estimate.equipment_20_rf"), inline: true, :checked => f.object.equipment=="20_rf", class: "equipment"
-  = f.radio_button :equipment, "20_fr", label: t("activerecord.attributes.estimate.equipment_20_fr"), inline: true, :checked => f.object.equipment=="20_fr", class: "equipment"
+  = f.check_box :equipment_20_dv, label: t("activerecord.attributes.estimate.equipment_20_dv"), inline: true, :checked => f.object.equipment_20_dv
+  = f.check_box :equipment_20_ot, label: t("activerecord.attributes.estimate.equipment_20_ot"), inline: true, :checked => f.object.equipment_20_ot, class: "equipment_ot"
+  = f.check_box :equipment_20_rf, label: t("activerecord.attributes.estimate.equipment_20_rf"), inline: true, :checked => f.object.equipment_20_rf, class: "equipment_rf"
+  = f.check_box :equipment_20_fr, label: t("activerecord.attributes.estimate.equipment_20_fr"), inline: true, :checked => f.object.equipment_20_fr, class: "equipment_fr"
   .clearfix
-  = f.radio_button :equipment, "40_dv", label: t("activerecord.attributes.estimate.equipment_40_dv"), inline: true, :checked => f.object.equipment=="40_dv", class: "equipment"
-  = f.radio_button :equipment, "40_hc", label: t("activerecord.attributes.estimate.equipment_40_hc"), inline: true, :checked => f.object.equipment=="40_hc", class: "equipment"
-  = f.radio_button :equipment, "40_ot", label: t("activerecord.attributes.estimate.equipment_40_ot"), inline: true, :checked => f.object.equipment=="40_ot", class: "equipment"
-  = f.radio_button :equipment, "40_rf", label: t("activerecord.attributes.estimate.equipment_40_rf"), inline: true, :checked => f.object.equipment=="40_rf", class: "equipment"
-  = f.radio_button :equipment, "40_fr", label: t("activerecord.attributes.estimate.equipment_40_fr"), inline: true, :checked => f.object.equipment=="40_fr", class: "equipment"
+  = f.check_box :equipment_40_dv, label: t("activerecord.attributes.estimate.equipment_40_dv"), inline: true, :checked => f.object.equipment_40_dv
+  = f.check_box :equipment_40_hc, label: t("activerecord.attributes.estimate.equipment_40_hc"), inline: true, :checked => f.object.equipment_40_hc
+  = f.check_box :equipment_40_ot, label: t("activerecord.attributes.estimate.equipment_40_ot"), inline: true, :checked => f.object.equipment_40_ot, class: "equipment_ot"
+  = f.check_box :equipment_40_rf, label: t("activerecord.attributes.estimate.equipment_40_rf"), inline: true, :checked => f.object.equipment_40_rf, class: "equipment_rf"
+  = f.check_box :equipment_40_fr, label: t("activerecord.attributes.estimate.equipment_40_fr"), inline: true, :checked => f.object.equipment_40_fr, class: "equipment_fr"
 = f.text_field :temperature, id: "temperature"
+= f.form_group :oog, label: { text: t("activerecord.attributes.estimate.oog") } do
+  = f.radio_button :oog, 1, label: t("bool_yes"), inline: true, class: "oog", :checked => f.object.oog
+  = f.radio_button :oog, 0, label: t("bool_no"), inline: true, class: "oog", :checked => !f.object.oog
 = f.form_group :imo, label: { text: t("activerecord.attributes.estimate.imo") } do
   = f.radio_button :imo, 1, label: t("bool_yes"), inline: true, class: "imo", :checked => f.object.imo
   = f.radio_button :imo, 0, label: t("bool_no"), inline: true, class: "imo", :checked => !f.object.imo
@@ -56,6 +61,9 @@
 = f.fields_for :estimate_items do |ff|
   = ff.text_field :number_of_items, :label => t("activerecord.attributes.fcl/estimate_items.number_of_items")
   = ff.text_area :description, :label => t("activerecord.attributes.fcl/estimate_items.description")
+  = ff.text_field :length, :label => t("activerecord.attributes.estimate_item.length"), id: "length"
+  = ff.text_field :width, :label => t("activerecord.attributes.estimate_item.width"), id: "width"
+  = ff.text_field :height, :label => t("activerecord.attributes.estimate_item.height"), id: "height"
 
 = f.form_group do
   = f.submit
@@ -66,9 +74,24 @@
     else $("#shipments_per_month").parents(".form-group").first().hide();
   }
   function change_equipment() {
-    var v = $(".equipment:checked").val();
-    if(v=="20_rf" || v=="40_rf") $("#temperature").parents(".form-group").first().show();
+    var rf = ($(".equipment_rf:checked").length > 0);
+    var ot = ($(".equipment_ot:checked").length > 0);
+    var fr = ($(".equipment_fr:checked").length > 0);
+    var oog = $(".oog:checked").val()=="1";
+
+    if (rf) $("#temperature").parents(".form-group").first().show();
     else $("#temperature").parents(".form-group").first().hide();
+    if (ot || fr) $(".oog").parents(".form-group").first().show();
+    else $(".oog").parents(".form-group").first().hide();
+    if (fr && oog) {
+      $("#length").parents(".form-group").first().show();
+      $("#width").parents(".form-group").first().show();
+    } else {
+      $("#length").parents(".form-group").first().hide();
+      $("#width").parents(".form-group").first().hide();
+    }
+    if ((fr || ot) && oog) $("#height").parents(".form-group").first().show();
+    else $("#height").parents(".form-group").first().hide();
   }
   function change_imo() {
     if($(".imo:checked").val()=="1") {
@@ -81,6 +104,7 @@
     $("#origin_address_modal .btn-success").click(function(){
       var country = $('#origin_country_input option:selected').text() 
       txt = $("#origin_address_input").val()+" "+$("#origin_zip_input").val()+" "+$("#origin_city_input").val()
+      if ($("#origin_province_input").val()!="") txt += " - "+$("#origin_province_input").val();
       if (country!="") txt += " ("+country+")";
       $("#origin_address_full_input").html(txt);
       $("#origin_address_modal").modal('hide'); 
@@ -88,13 +112,14 @@
     $("#destination_address_modal .btn-success").click(function(){
       var country = $('#destination_country_input option:selected').text() 
       txt = $("#destination_address_input").val()+" "+$("#destination_zip_input").val()+" "+$("#destination_city_input").val();
+      if ($("#destination_province_input").val()!="") txt += " - "+$("#destination_province_input").val();
       if (country!="") txt += " ("+country+")";
       $("#destination_address_full_input").html(txt);
       $("#destination_address_modal").modal('hide'); 
     })
     $(".shipment_type").change(change_shipment_type);
     change_shipment_type();
-    $(".equipment").change(change_equipment);
+    $(".equipment_rf, .equipment_oog, .equipment_fr, .equipment_ot, .oog").change(change_equipment);
     change_equipment();
     $(".imo").change(change_imo);
     change_imo();

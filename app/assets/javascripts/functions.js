@@ -1,23 +1,25 @@
-$(function() {
-  $(".datatable").dataTable({
-    language: {
-      "sProcessing":   "Processant...",
-      "sLengthMenu":   "Mostra _MENU_ registres",
-      "sZeroRecords":  "No s'han trobat registres.",
-      "sInfo":         "Mostrant de _START_ a _END_ de _TOTAL_ registres",
-      "sInfoEmpty":    "Mostrant de 0 a 0 de 0 registres",
-      "sInfoFiltered": "(filtrat de _MAX_ total registres)",
-      "sInfoPostFix":  "",
-      "sSearch":       "Filtrar:",
-      "sUrl":          "",
-      "oPaginate": {
-          "sFirst":    "Primer",
-          "sPrevious": "Anterior",
-          "sNext":     "Següent",
-          "sLast":     "Últim"
-      }
+DATATABLE_PROPS = {
+  language: {
+    "sProcessing":   "Processant...",
+    "sLengthMenu":   "Mostra _MENU_ registres",
+    "sZeroRecords":  "No s'han trobat registres.",
+    "sInfo":         "Mostrant de _START_ a _END_ de _TOTAL_ registres",
+    "sInfoEmpty":    "Mostrant de 0 a 0 de 0 registres",
+    "sInfoFiltered": "(filtrat de _MAX_ total registres)",
+    "sInfoPostFix":  "",
+    "sSearch":       "Filtrar:",
+    "sUrl":          "",
+    "oPaginate": {
+        "sFirst":    "Primer",
+        "sPrevious": "&lt;",
+        "sNext":     "&gt;",
+        "sLast":     "Últim"
     }
-  });
+  }
+};
+
+$(function() {
+  $(".datatable").dataTable(DATATABLE_PROPS);
 
   $("select").each(function() {
     if (($(this).parents('.modal').length==0) && ($(this).parents('.dataTables_wrapper').length==0)) {

@@ -14,13 +14,13 @@
         %h3.panel-title= t("activerecord.models.port", count: 2)
         .clearfix
       .panel-body
-        %table.table.table-hover.table-condensed.datatable
+        %table.table.table-hover.table-condensed.table-bordered.datatable
           %thead
             %tr
               %th= t("activerecord.attributes.port.code")
               %th= t("activerecord.attributes.port.name")
               %th= t("activerecord.attributes.port.country_id")
-              %th= t("helpers.actions")
+              %th.text-center= t("helpers.actions")
           %tbody
             != render :partial => 'port', :collection => @ports
 

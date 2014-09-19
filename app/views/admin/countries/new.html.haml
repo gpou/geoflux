@@ -9,7 +9,7 @@
   .col-lg-12
     .panel.panel-default
       .panel-heading
-        =t("helpers.new_model", :model => t("activerecord.models.country", :count => 1))
+        %h3.panel-title=t("helpers.new_model", :model => t("activerecord.models.country", :count => 1))
       .panel-body
         = bootstrap_nested_form_for @country, :url => admin_countries_path, :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
           != render :partial => "form", :locals => {:f => f}

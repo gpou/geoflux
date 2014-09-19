@@ -13,6 +13,7 @@
         = f.text_field :origin_address, :id => "origin_address_input"
         = f.text_field :origin_city, :id => "origin_city_input"
         = f.text_field :origin_zip, :id => "origin_zip_input"
+        = f.text_field :origin_province, :id => "origin_province_input"
         = f.collection_select :origin_country_id, Country.order(:name), :id, :name, {include_blank: ''}, {:"data-placeholder"=> t("placeholders.estimate.origin_country_id"), :id => "origin_country_input"}
       .modal-footer
         %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
@@ -28,6 +29,7 @@
         = f.text_field :destination_address, :id => "destination_address_input"
         = f.text_field :destination_city, :id => "destination_city_input"
         = f.text_field :destination_zip, :id => "destination_zip_input"
+        = f.text_field :destination_province, :id => "destination_province_input"
         = f.collection_select :destination_country_id, Country.order(:name), :id, :name, {include_blank: ''}, {:"data-placeholder"=> t("placeholders.estimate.destination_country_id"), :id => "destination_country_input"}
       .modal-footer
         %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
@@ -75,7 +77,8 @@
   $(function() {
     $("#origin_address_modal .btn-success").click(function(){
       var country = $('#origin_country_input option:selected').text() 
-      txt = $("#origin_address_input").val()+" "+$("#origin_zip_input").val()+" "+$("#origin_city_input").val()
+      txt = $("#origin_address_input").val()+" "+$("#origin_zip_input").val()+" "+$("#origin_city_input").val();
+      if ($("#origin_province_input").val()!="") txt += " - "+$("#origin_province_input").val();
       if (country!="") txt += " ("+country+")";
       $("#origin_address_full_input").html(txt);
       $("#origin_address_modal").modal('hide'); 
@@ -83,6 +86,7 @@
     $("#destination_address_modal .btn-success").click(function(){
       var country = $('#destination_country_input option:selected').text() 
       txt = $("#destination_address_input").val()+" "+$("#destination_zip_input").val()+" "+$("#destination_city_input").val();
+      if ($("#destination_province_input").val()!="") txt += " - "+$("#destination_province_input").val();
       if (country!="") txt += " ("+country+")";
       $("#destination_address_full_input").html(txt);
       $("#destination_address_modal").modal('hide'); 

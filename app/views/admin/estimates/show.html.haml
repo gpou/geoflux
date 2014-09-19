@@ -1,0 +1,100 @@
+-@page_title = "#{t("activerecord.models.estimate", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.estimate", count: 2), admin_estimates_path, :title => t("activerecord.models.estimate", count: 2)
+  %li.current
+    = @estimate.type.upcase
+
+.row
+  .col-lg-5
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to edit_admin_estimate_path(@estimate), :class => "btn btn-info btn-sm tipS", :alt => "modificar" do
+              %span.glyphicon.glyphicon-pencil
+          = @estimate.type.upcase
+      .panel-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate.created_at")
+            .col-sm-8
+              .form-control= l(@estimate.created_at)
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate.updated_at")
+            .col-sm-8
+              .form-control= l(@estimate.updated_at)
+          != render :partial => "#{@estimate.type.downcase}"
+
+  .col-lg-7
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to reload_admin_estimate_estimate_requests_path(@estimate), :class => "btn btn-info btn-sm" do
+              %span.glyphicon.glyphicon-refresh
+              = t("helpers.find_model", model: t("activerecord.models.contact", count: 2))
+          = t("activerecord.models.estimate_request", count: 2)
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable_custom
+          %thead
+            %tr
+              %th= t("activerecord.attributes.estimate_request.carrier")
+              %th= t("activerecord.attributes.estimate_request.contact")
+              %th= t("activerecord.attributes.estimate_request.state")
+              %th.text-center= t("helpers.actions")
+              %th= t("activerecord.attributes.estimate_request.created_at")
+              %th= t("activerecord.attributes.estimate_request.updated_at")
+              %th= t("activerecord.attributes.estimate_request.email_content")
+          %tbody
+            != render :partial => 'estimate_request', :collection => @estimate.estimate_requests
+
+#estimate_request.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+        %h4.modal-title= t("activerecord.models.estimate_request", :count => 1)
+      .modal-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.created_at")
+            .col-sm-8
+              .form-control#estimate_request_created_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.updated_at")
+            .col-sm-8
+              .form-control#estimate_request_updated_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.state")
+            .col-sm-8
+              .form-control#estimate_request_state
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.carrier")
+            .col-sm-8
+              .form-control#estimate_request_carrier
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.contact")
+            .col-sm-8
+              .form-control#estimate_request_contact
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.email_content")
+            .col-sm-8
+              .form-control.text#estimate_request_email_content
+      .modal-footer
+        %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
+
+:javascript
+  $(function() {
+    $(".datatable_custom").dataTable($.extend({}, DATATABLE_PROPS, { "aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 4, 5, 6 ] } ]  }));
+    $('#estimate_request').on('show.bs.modal', function (e) {
+      var row = $(e.relatedTarget).closest('tr')
+      $("#estimate_request_carrier").html(row.find('.estimate_request_carrier').text())
+      $("#estimate_request_contact").html(row.find('.estimate_request_contact').text())
+      $("#estimate_request_state").html(row.find('.estimate_request_state').text())
+      $("#estimate_request_created_at").html(row.find('.estimate_request_created_at').text())
+      $("#estimate_request_updated_at").html(row.find('.estimate_request_updated_at').text())
+      $("#estimate_request_email_content").html(row.find('.estimate_request_email_content').text())
+    })
+  })

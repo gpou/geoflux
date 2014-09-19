@@ -1,0 +1,88 @@
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.customer_id")
+  .col-sm-8
+    .form-control= @estimate.customer
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin_port_id")
+  .col-sm-8
+    .form-control= @estimate.origin_port
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
+  .col-sm-8
+    .form-control= @estimate.destination_port
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin")
+  .col-sm-8
+    .form-control= @estimate.origin
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination")
+  .col-sm-8
+    .form-control= @estimate.destination
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.shipment_type")
+  .col-sm-8
+    .form-control= t("activerecord.attributes.estimate.shipment_type_#{@estimate.shipment_type}")
+- if @estimate.shipment_type=="regular"
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.shipments_per_month")
+    .col-sm-8
+      .form-control= @estimate.shipments_per_month
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.equipment")
+  .col-sm-8
+    .form-control.text= @estimate.equipment
+- if @estimate.equipment_20_rf or @estimate.equipment_40_rf
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.temperature")
+    .col-sm-8
+      .form-control= @estimate.temperature
+- if @estimate.equipment_20_ot or @estimate.equipment_20_fr or @estimate.equipment_40_ot or @estimate.equipment_40_fr
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.oog")
+    .col-sm-8
+      .form-control
+        - if @estimate.oog
+          %span.glyphicon.glyphicon-ok
+        - else
+          %span.glyphicon.glyphicon-remove
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo")
+  .col-sm-8
+    .form-control
+      - if @estimate.imo
+        %span.glyphicon.glyphicon-ok
+      - else
+        %span.glyphicon.glyphicon-remove
+- if @estimate.imo
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo_class")
+    .col-sm-8
+      .form-control= @estimate.imo_class
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo_un")
+    .col-sm-8
+      .form-control= @estimate.imo_un
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.fcl/estimate_items.number_of_items")
+  .col-sm-8
+    .form-control= @estimate.estimate_items.first.number_of_items
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.fcl/estimate_items.description")
+  .col-sm-8
+    .form-control.text= @estimate.estimate_items.first.description.gsub(/\n/, '<br>').html_safe
+- if @estimate.oog and (@estimate.equipment_20_fr or @estimate.equipment_40_fr)
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.length")
+    .col-sm-8
+      .form-control.text= @estimate.estimate_items.first.length
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.width")
+    .col-sm-8
+      .form-control.text= @estimate.estimate_items.first.width
+- if @estimate.oog and (@estimate.equipment_20_fr or @estimate.equipment_40_fr or @estimate.equipment_20_ot or @estimate.equipment_40_ot)
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.height")
+    .col-sm-8
+      .form-control.text= @estimate.estimate_items.first.height
+
+

@@ -1,0 +1,47 @@
+-@page_title = "#{t("activerecord.models.contact", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.carrier", count: 2), admin_carriers_path, :title => t("activerecord.models.carrier", count: 2)
+  %li
+    = link_to @carrier.acronym, admin_carrier_path(@carrier)
+  %li
+    = link_to t("activerecord.models.contact", count: 2), admin_carrier_contacts_path, :title => t("activerecord.models.contact", count: 2)
+  %li.current
+    =t("helpers.edit_a_model", :model => t("activerecord.models.contact", :count => 1))
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title= "#{@carrier.acronym} - #{t("helpers.edit_a_model", :model => t("activerecord.models.contact", :count => 1))}"
+      .panel-body
+        = bootstrap_nested_form_for @contact, :url => admin_carrier_contact_path(@carrier, @contact), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+          != render :partial => "form", :locals => {:f => f}
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        .btn-group.pull-right
+          = link_to new_admin_carrier_contact_journey_contact_path(@carrier, @contact), :class => "btn btn-info btn-sm" do
+            %span.glyphicon.glyphicon-plus
+            = t("helpers.new_model", model: t("activerecord.models.journey_contact", count: 1))
+        %h3.panel-title= t("activerecord.models.journey_contact", count: 2)
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable
+          %thead
+            %tr
+              %th= t("activerecord.attributes.journey_contact.origin_port")
+              %th= t("activerecord.attributes.journey_contact.destination_port")
+              %th= t("activerecord.attributes.journey_contact.lcl")
+              %th= t("activerecord.attributes.journey_contact.fcl")
+              %th= t("activerecord.attributes.journey_contact.roro")
+              %th= t("activerecord.attributes.journey_contact.fltk")
+              %th= t("activerecord.attributes.journey_contact.cvnl")
+              %th= t("activerecord.attributes.journey_contact.chrt")
+              %th= t("activerecord.attributes.journey_contact.reefer")
+              %th.text-center= t("helpers.actions")
+          %tbody
+            != render :partial => 'journey_contact', :collection => @contact.journey_contacts
+

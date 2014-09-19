@@ -1,0 +1,30 @@
+%tr
+  %td= journey_contact.origin_port
+  %td= journey_contact.destination_port
+  %td.text-center
+    - if journey_contact.lcl
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.fcl
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.roro
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.fltk
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.cvnl
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.chrt
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    - if journey_contact.reefer
+      %span.glyphicon.glyphicon-ok
+  %td.text-center
+    .btn-group.btn-group-xs
+      %a.tablectrl_small.btn.btn-default.tipS{:href => edit_admin_carrier_contact_journey_contact_path(@carrier, @contact, journey_contact), :title => t("helpers.edit_model", model: t("activerecord.models.journey_contact", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_carrier_contact_journey_contact_path(@carrier, @contact, journey_contact), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.journey_contact", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.journey_contact", count: 1)) do
+        %span.glyphicon.glyphicon-remove

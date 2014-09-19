@@ -15,6 +15,7 @@ div.dataTables_filter label {
 
 div.dataTables_filter input {
 	width: 16em;
+  margin-left: 5px;
 }
 
 div.dataTables_info {
@@ -41,8 +42,8 @@ table.dataTable th {
 
 table.dataTable {
 	clear: both;
-	margin-top: 6px !important;
-	margin-bottom: 6px !important;
+	margin-top: 16px !important;
+	margin-bottom: 16px !important;
 	max-width: none !important;
 }
 
@@ -279,3 +280,4 @@ div.FixedHeader_Cloned table {
 	margin: 0 !important
 }
 
+th.hide_me, td.hide_me {display: none;}

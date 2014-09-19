@@ -7,53 +7,34 @@ class Fcl < Estimate
     self.imo ||= false
   end
 
-  #validate :origin_complete
-  #validate :destination_complete
   validates :shipment_type, :presence => true
   validates :shipments_per_month, :presence => true, :if => lambda { |e| e.shipment_type == "regular" }
   validates :shipments_per_month, :numericality => true, :allow_blank => true
-  validates :equipment, :presence => true
-  validates :temperature, :presence => true, :if => lambda { |e| e.equipment=="20_rf" or e.equipment=="40_rf" }
+  validates :temperature, :presence => true, :if => lambda { |e| e.equipment_20_rf or e.equipment_40_rf }
   validates :imo_class, :presence => true, :if => :imo
   validates :imo_un, :presence => true, :if => :imo
-  validates :oog, :presence => true, :if => lambda { |e| e.equipment=="20_ot" or e.equipment=="20_fr" or e.equipment=="40_ot" or e.equipment=="40_fr" }
+  validates :oog, :presence => true, :if => lambda { |e| e.equipment_20_ot or e.equipment_20_fr or e.equipment_40_ot or e.equipment_40_fr }
 
-  def origin_complete
-    if not origin_address.present?
-      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_address")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not origin_zip.present?
-      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_zip")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not origin_city.present?
-      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_city")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not origin_country_id.present?
-      errors.add(:origin, "#{I18n.t("activerecord.attributes.estimate.origin_country_id")} #{I18n.t("errors.messages.blank")}")
-    end
-  end
-  
-  def destination_complete
-    if not destination_address.present?
-      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_address")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not destination_zip.present?
-      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_zip")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not destination_city.present?
-      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_city")} #{I18n.t("errors.messages.blank")}")
-    end
-    if not destination_country_id.present?
-      errors.add(:destination, "#{I18n.t("activerecord.attributes.estimate.destination_country_id")} #{I18n.t("errors.messages.blank")}")
+  validate :equipment_present
+
+  def equipment_present
+    if not equipment_20_dv and not equipment_20_ot and not equipment_20_rf and not equipment_20_fr and not equipment_40_dv and not equipment_40_hc and not equipment_40_ot and not equipment_40_rf and not equipment_40_fr
+      errors.add(:equipment, "#{I18n.t("activerecord.attributes.estimate.equipment")} #{I18n.t("errors.messages.blank")}")
     end
   end
 
-
-  def origin
-    "#{origin_address} #{origin_zip} #{origin_city} #{origin_country ? "(#{origin_country.name})" : ""}"
+  def equipment
+    [
+      equipment_20_dv ? I18n.t("activerecord.attributes.estimate.equipment_20_dv") : "",
+      equipment_20_ot ? I18n.t("activerecord.attributes.estimate.equipment_20_ot") : "",
+      equipment_20_rf ? I18n.t("activerecord.attributes.estimate.equipment_20_rf") : "",
+      equipment_20_fr ? I18n.t("activerecord.attributes.estimate.equipment_20_fr") : "",
+      equipment_40_dv ? I18n.t("activerecord.attributes.estimate.equipment_40_dv") : "",
+      equipment_40_hc ? I18n.t("activerecord.attributes.estimate.equipment_40_hc") : "",
+      equipment_40_ot ? I18n.t("activerecord.attributes.estimate.equipment_40_ot") : "",
+      equipment_40_rf ? I18n.t("activerecord.attributes.estimate.equipment_40_rf") : "",
+      equipment_40_fr ? I18n.t("activerecord.attributes.estimate.equipment_40_fr") : ""
+    ].compact.reject(&:blank?).join(", ")
   end
 
-  def destination
-    "#{destination_address} #{destination_zip} #{destination_city} #{destination_country ? "(#{destination_country.name})" : ""}"
-  end
 end

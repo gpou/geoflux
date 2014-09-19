@@ -144,15 +144,19 @@ ca:
     delete_model: Eliminar aquest %{model}
     confirm_delete_model: Segur que vols eliminar aquest %{model}?
     new_model_fem: Afegir una %{model}
+    edit_a_model_fem: Modificar una %{model}
     edit_model_fem: Modificar aquesta %{model}
     delete_model_fem: Eliminar aquesta %{model}
     confirm_delete_model_fem: Segur que vols eliminar aquesta %{model}?
+    view_model: Veure aquest %{model}
+    view_model_fem: Veure aquesta %{model}
     successfully_created: "L'enregistrament s'ha realitzat amb èxit"
     successfully_updated: "L'actualització s'ha realitzat amb èxit"
     error_while_creation: "S'ha produït un error"
     successfully_deleted: "L'element s'ha eliminat correctament"
     close: "Tancar"
     cancel: "Cancel·lar"
+    find_model: "Buscar %{model}"
   number:
     currency:
       format:

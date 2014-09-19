@@ -1,0 +1,12 @@
+= f.alert_message flash[:error]
+
+= f.static_control :carrier, :class => "uneditable-input"
+= f.text_field :email
+= f.text_field :first_name
+= f.text_field :last_name
+= f.text_field :phone
+= f.text_area :comments
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_carrier_contacts_path(@carrier), :class => "btn btn-default"

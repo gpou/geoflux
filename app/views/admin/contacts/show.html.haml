@@ -1,0 +1,52 @@
+-@page_title = "#{t("activerecord.models.contact", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.carrier", count: 2), admin_carriers_path, :title => t("activerecord.models.carrier", count: 2)
+  %li
+    = link_to @carrier.acronym, admin_carrier_path(@carrier)
+  %li
+    = link_to t("activerecord.models.contact", count: 2), admin_carrier_contacts_path, :title => t("activerecord.models.contact", count: 2)
+  %li.current
+    = @contact.email
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        .btn-group.pull-right
+          = link_to new_admin_carrier_contact_journey_contact_path(@carrier, @contact), :class => "btn btn-info btn-sm" do
+            %span.glyphicon.glyphicon-plus
+            = t("helpers.new_model", model: t("activerecord.models.journey_contact", count: 1))
+        %h3.panel-title= t("activerecord.models.journey_contact", count: 2)
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable
+          %thead
+            %tr
+              %th= t("activerecord.attributes.journey_contact.origin_port_id")
+              %th= t("activerecord.attributes.journey_contact.destination_port_id")
+              %th.text-center= t("activerecord.attributes.journey_contact.lcl")
+              %th.text-center= t("activerecord.attributes.journey_contact.fcl")
+              %th.text-center= t("activerecord.attributes.journey_contact.roro")
+              %th.text-center= t("activerecord.attributes.journey_contact.fltk")
+              %th.text-center= t("activerecord.attributes.journey_contact.cvnl")
+              %th.text-center= t("activerecord.attributes.journey_contact.chrt")
+              %th.text-center= t("activerecord.attributes.journey_contact.reefer")
+              %th.text-center= t("helpers.actions")
+          %tbody
+            != render :partial => 'journey_contact', :collection => @contact.journey_contacts
+
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title= t("activerecord.models.estimate_request", count: 2)
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable
+          %thead
+            %tr
+              %th= t("activerecord.attributes.estimate_request.created_at")
+              %th= t("activerecord.attributes.estimate_request.estimate")
+              %th= t("activerecord.attributes.estimate_request.state")
+              %th.text-center= t("helpers.actions")
+          %tbody
+            != render :partial => 'estimate_request', :collection => @contact.estimate_requests
