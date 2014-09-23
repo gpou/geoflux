@@ -10,7 +10,7 @@ class AddEstimatesEquipmentTypes < ActiveRecord::Migration
     add_column :estimates, :equipment_40_rf, :boolean, after: :equipment_40_ot
     add_column :estimates, :equipment_40_fr, :boolean, after: :equipment_40_rf
     Fcl.all.each do |e|
-      e["equipment_#{e.equipment}"] = true
+      e["equipment_#{e["equipment"]}"] = true
       e.save
     end
     remove_column :estimates, :equipment
