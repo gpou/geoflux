@@ -280,7 +280,7 @@ ca:
         other: "%{count} contenedores"
     lcl:
       email_subject: "Precio de %{origin} a %{destination}"
-      email_content: "Por favor, necesito precio %{origin_destination} para %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}."
+      email_content: "Por favor, necesito precio %{origin_destination} para %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
       email_content_multiple: "Por favor, necesito precio %{origin_destination} para:"
       email_content_item: "- %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
       email_origin_dest: "de %{origin} a %{destination}"
