@@ -22,11 +22,11 @@
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.weight")
   .col-sm-8
-    .form-control= estimate.estimate_items.first.weight
+    .form-control= estimate_items.first.weight
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.chrt/estimate_items.description")
   .col-sm-8
-    .form-control.text= estimate.estimate_items.first.description.gsub(/\n/, '<br>').html_safe
+    .form-control.text= estimate_items.first.description.gsub(/\n/, '<br>').html_safe
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.stowage_factor")
   .col-sm-8

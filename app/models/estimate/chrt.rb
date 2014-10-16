@@ -26,7 +26,7 @@ class Chrt < Estimate
       txt << I18n.t("estimate_request.chrt.email_content_stowage_factor", :stowage_factor => self.stowage_factor)
     end
     unless self.loading_laytime.blank?
-      if self.loading_laytime==self.unloading_laytime or self.unloading_laytime.blank
+      if self.loading_laytime==self.unloading_laytime or self.unloading_laytime.blank?
         txt << I18n.t("estimate_request.chrt.email_content_laytime", :laytime => self.loading_laytime)
       else
         txt << I18n.t("estimate_request.chrt.email_content_laytimes", :loading_laytime => self.loading_laytime, :unloading_laytime => self.unloading_laytime)

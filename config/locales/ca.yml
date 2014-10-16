@@ -229,6 +229,8 @@ ca:
     rebuild_email: Regenerar el missatge
     edit_email: Modificar el missatge
     edit_comments: Modificar els comentaris
+    no_order: Encara no s'ha creat la comanda
+    no_order_possible: No es pot crear la comanda perquè hi ha d'haver almenys una petició de pressupost acceptada.
     create_order: Crear la comanda
     edit_comments: Modificar els comentaris
   estimate_item:
