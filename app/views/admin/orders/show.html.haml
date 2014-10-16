@@ -1,0 +1,110 @@
+-@page_title = "#{t("activerecord.models.order", count: 2)}"
+-content_for :breadcrumb do
+  %li
+    = link_to t("activerecord.models.order", count: 2), admin_orders_path, :title => t("activerecord.models.order", count: 2)
+  %li.current
+    = @order.order_type.upcase
+
+.row
+  .col-lg-5
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          = @order.order_type.upcase
+      .panel-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.carrier_id")
+            .col-sm-8
+              .form-control= @order.carrier
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.contact_id")
+            .col-sm-8
+              .form-control= @order.contact
+          != render :partial => "/admin/estimates/#{@order.order_type.downcase}", :locals => {:estimate => @order, :estimate_items => @order.order_items}
+
+  .col-lg-7
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to edit_admin_order_path(@order), :class => "btn btn-info btn-sm tipS", :alt => "modificar" do
+              %span.glyphicon.glyphicon-pencil
+          = t("activerecord.models.order", count: 1)
+        .clearfix
+      .panel-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.state")
+            .col-sm-8
+              .form-control
+                %span.glyphicon{:class => "glyphicon-state-#{@order.state}"}
+                = t(@order.state, :scope => "activerecord.attributes.order.states")
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.created_at")
+            .col-sm-8
+              .form-control= l(@order.created_at)
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.updated_at")
+            .col-sm-8
+              .form-control= l(@order.updated_at)
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.date")
+            .col-sm-8
+              .form-control= l(@order.date)
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.reference")
+            .col-sm-8
+              .form-control= @order.reference
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.order.price")
+            .col-sm-8
+              .form-control= @order.price
+
+
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          = t("activerecord.attributes.order.email")
+        .clearfix
+      .panel-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.order.email_subject")
+            .col-sm-9
+              .form-control= @order.email_subject
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.order.email_content")
+            .col-sm-9
+              .form-control.text= (@order.email_content.blank? ? "&nbsp;" : @order.email_content.gsub(/\n/, '<br>')).html_safe
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.order.email_additional_content")
+            .col-sm-9
+              .form-control.text= (@order.email_additional_content.blank? ? "&nbsp;" : @order.email_additional_content.gsub(/\n/, '<br>')).html_safe
+
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to "#order_edit_comments", :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("order.edit_comments") do
+              %span.glyphicon.glyphicon-pencil
+          = t("activerecord.attributes.order.comments")
+        .clearfix
+      .panel-body
+        .form-horizontal
+          .form-group
+            .col-sm-12
+              .form-control.text= (@order.comments.blank? ? "&nbsp;" : @order.comments.gsub(/\n/, '<br>')).html_safe
+
+#order_edit_comments.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      = bootstrap_nested_form_for @order, :as => :order, :url => update_comments_admin_order_path(@order), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+          %h4.modal-title= t("order.edit_comments")
+        .modal-body
+          = f.text_area :comments, :style => "height: 250px"
+          = f.form_group do
+            %button{:type=>"submit", :class=>"btn btn-success"}= t("helpers.save")
+            %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.cancel")

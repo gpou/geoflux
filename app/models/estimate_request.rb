@@ -8,32 +8,23 @@ class EstimateRequest < ActiveRecord::Base
   validates :contact, :presence => true
 
   state_machine :state, :initial => :pending do
-    after_transition :on => :send, :do => :set_sent_at
-    after_transition :on => :stop_waiting_response, :do => :set_no_response_at
-    after_transition :on => :dismiss, :do => :set_dismissed_at
-    after_transition :on => :select, :do => :set_selected_at
-    after_transition :on => :accept, :do => :set_accepted_at
-    event :send do
-      transition [:pending] => :sent
+    state :pending, :sent, :analysing, :negociating, :no_response, :dismissed, :selected, :accepted
+    after_transition any => :sent, :do => :set_sent_at
+    after_transition any => :no_response, :do => :set_no_response_at
+    after_transition any => :dismissed, :do => :set_dismissed_at
+    after_transition any => :selected, :do => :set_selected_at
+    after_transition any => :accepted, :do => :set_accepted_at
+    event :send_request do
+      transition all => :sent
     end
-    event :stop_waiting_response do
-      transition [:sent] => :no_response
-    end
-    event :negociate do
-      transition [:sent] => :negociating
-    end
-    event :analyse do
-      transition [:sent, :negociating] => :analysing
-    end
-    event :dismiss do
-      transition [:sent, :negociating, :analysing] => :dismissed
-    end
-    event :select do
-      transition [:sent, :negociating, :analysing] => :selected
-    end
-    event :accept do
-      transition [:sent, :negociating, :analysing, :selected] => :accepted
-    end
+  end
+
+  def copy_email_from_estimate
+    self.update_columns(:email_subject => self.estimate.email_subject, :email_content => self.estimate.email_content, :email_additional_content => self.estimate.email_additional_content)
+  end
+
+  def email_like_estimate?
+    self.email_subject==self.estimate.email_subject and self.email_content==self.estimate.email_content and self.email_additional_content==self.estimate.email_additional_content
   end
 
   def set_sent_at

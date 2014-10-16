@@ -1,0 +1,10 @@
+= f.alert_message flash[:error]
+= f.select :state, [[" " + t("activerecord.attributes.order.states.pending"),"pending", {:class => "glyphicon glyphicon-state-pending"}], [" " + t("activerecord.attributes.order.states.started"),"started", {:class => "glyphicon glyphicon-state-started"}], [" " + t("activerecord.attributes.order.states.finished"),"finished", {:class => "glyphicon glyphicon-state-finished"}], [" " + t("activerecord.attributes.order.states.paid"),"paid", {:class => "glyphicon glyphicon-state-paid"}], [" " + t("activerecord.attributes.order.states.cancelled"),"cancelled", {:class => "glyphicon glyphicon-state-cancelled"}] ]
+= f.text_field :date, :value => f.object.date ? l(f.object.date) : "", :class => "datepicker", :append => content_tag(:span, "", :class => "glyphicon glyphicon-calendar")
+= f.text_field :reference
+= f.text_field :price
+
+= f.form_group do
+  = f.submit
+  - if !f.object.new_record?
+    = link_to t("helpers.cancel"), admin_order_path(@order), :class => "btn btn-default"

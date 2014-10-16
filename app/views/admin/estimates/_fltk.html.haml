@@ -1,22 +1,18 @@
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.customer_id")
   .col-sm-8
-    .form-control= @estimate.customer
+    .form-control= estimate.customer
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin_port_id")
   .col-sm-8
-    .form-control= @estimate.origin_port
+    .form-control= estimate.origin_port
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
   .col-sm-8
-    .form-control= @estimate.destination_port
-.form-group
-  %label.control-label.col-sm-4= t("activerecord.attributes.fltk/estimate_items.number_of_items")
-  .col-sm-8
-    .form-control= @estimate.estimate_items.first.number_of_items
+    .form-control= estimate.destination_port
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.fltk/estimate_items.description")
   .col-sm-8
-    .form-control.text= @estimate.estimate_items.first.description.gsub(/\n/, '<br>').html_safe
+    .form-control.text= estimate_items.first.description.gsub(/\n/, '<br>').html_safe
 
 

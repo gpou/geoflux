@@ -34,7 +34,7 @@ ca:
       - Divendres
       - Dissabte
     formats:
-      default: ! '%d-%m-%Y'
+      default: ! '%d/%m/%Y'
       long: ! '%d de %B de %Y'
       short: ! '%d de %b'
     month_names:
@@ -137,6 +137,7 @@ ca:
     new: Afegir
     edit: Modificar
     delete: Eliminar
+    save: Guardar
     confirm_delete: Segur que vols eliminar aquest element?
     new_model: Afegir un %{model}
     edit_a_model: Modificar un %{model}
@@ -154,9 +155,11 @@ ca:
     successfully_updated: "L'actualització s'ha realitzat amb èxit"
     error_while_creation: "S'ha produït un error"
     successfully_deleted: "L'element s'ha eliminat correctament"
+    successfully_changed_state: "L'estat s'ha modificat correctament"
     close: "Tancar"
     cancel: "Cancel·lar"
     find_model: "Buscar %{model}"
+    change_state_to: "Canviar a l'estat a:"
   number:
     currency:
       format:
@@ -212,8 +215,90 @@ ca:
   time:
     am: am
     formats:
-      default: '%d-%m-%Y %H:%M'
+      default: '%d/%m/%Y %H:%M'
       long: '%d de %B de %Y %H:%M'
       short: '%d de %b %H:%M'
+      only_date: '%d/%m/%Y'
     pm: pm
   home_page: Inici
+  estimate:
+    send_requests: "Enviar tots els missatges pendents"
+    successfully_sent_requests: "Els missatges s'han enviat correctament"
+    add_requests: "Afegir peticions de pressupost"
+    requests_added: "S'han afegit %{count} peticions de pressupost"
+    rebuild_email: Regenerar el missatge
+    edit_email: Modificar el missatge
+    edit_comments: Modificar els comentaris
+    create_order: Crear la comanda
+    edit_comments: Modificar els comentaris
+  estimate_item:
+    settings: "Configuració de la mida dels bultos"
+  estimate_request:
+    successfully_sent_request: "El missatge s'ha enviat correctament"
+    reload_email_from_estimate: "Recarregar el missatge del pressupost"
+    sure_reload_email_from_estimate: "Segur que vols sobre-escriure el missatge amb el del pressupost?"
+    chrt:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content_spot: "Por favor, necesito precio de %{origin} a %{destination} para un envío de %{weight} de %{description}.  "
+      email_content_regular: "Por favor, necesito precio de %{origin} a %{destination} para envíos de %{weight} de %{description}.  "
+      email_content_shipments: 
+        one: "Se trataría de un tráfico mensual. "
+        other: "Se trataría de %{count} tráficos mensuales. "
+      email_content_stowage_factor: "El factor de estiba es de %{stowage_factor}. "
+      email_content_laytime: "El tiempo de plancha es de %{days} días. "
+      email_content_laytimes: "El tiempo de plancha es de %{loading_laytime} días para la carga y de %{unloading_laytime} días para la descarga. "
+    cvnl:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{count} %{description}. Las medidas son %{length} largo x %{width} ancho x %{height} alto."
+      email_content_cylinder: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{count} %{description}. Las medidas son Ø%{diameter} x %{height}."
+      email_content_weight: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{weight} de %{description}. Las medidas son %{length} largo x %{width} ancho x %{height} alto."
+      email_content_weight_cylinder: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{weight} de %{description}. Las medidas son Ø%{diameter} x %{height}."
+      email_content_multiple: "Por favor, necesito precio de %{origin} a %{destination} para enviar:"
+      email_content_item_cylinder: "%{count} %{description} Ø%{diameter} x %{height} – %{weight}."
+      email_content_item: "%{count} %{description} %{length} largo x %{width} ancho x %{height} alto – %{weight}."
+      email_content_item_weight_cylinder: "%{weight} de %{description} Ø%{diameter} x %{height}."
+      email_content_item_weight: "%{weight} de %{description} %{length} largo x %{width} ancho x %{height} alto."
+    fltk:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{count} %{description}."
+    roro:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content: "Por favor, necesito precio de %{origin} a %{destination} para enviar %{count} %{description} con estas características: %{length} largo x %{width} ancho x %{height} alto - %{weight}"
+      email_content_multiple: "Por favor, necesito precio de %{origin} a %{destination} para enviar:"
+      email_content_item: "%{count} %{description} %{length} largo x %{width} ancho x %{height} alto - %{weight}"
+    fcl:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content: "Por favor, necesito precio %{origin_destination} para %{count_containers} de %{types} con %{description}."
+      email_origin_dest: "de %{origin} a %{destination}"
+      email_origin_pickup_dest: "de recogida en %{origin} con destino %{destination}"
+      email_origin_dest_delivery: "de %{origin} con entrega en %{destination}"
+      email_origin_pickup_dest_delivery: "de recogida en %{origin} con entrega en %{destination}"
+      email_origin_address: "La dirección de recogida es:\n %{address}\n% {zip} %{city} (%{country})"
+      email_destination_address: "La dirección de entrega es:\n %{address}\n %{zip} %{city} (%{country})"
+      email_count_containers:
+        one: "un contenedor"
+        other: "%{count} contenedores"
+    lcl:
+      email_subject: "Precio de %{origin} a %{destination}"
+      email_content: "Por favor, necesito precio %{origin_destination} para %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}."
+      email_content_multiple: "Por favor, necesito precio %{origin_destination} para:"
+      email_content_item: "- %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
+      email_origin_dest: "de %{origin} a %{destination}"
+      email_origin_pickup_dest: "de recogida en %{origin} con destino %{destination}"
+      email_origin_dest_delivery: "de %{origin} con entrega en %{destination}"
+      email_origin_pickup_dest_delivery: "de recogida en %{origin} con entrega en %{destination}"
+      email_origin_address: "La dirección de recogida es:\n %{address}\n %{zip} %{city} (%{country})"
+      email_destination_address: "La dirección de entrega es:\n %{address}\n %{zip} %{city} (%{country})"
+  weight:
+    unit: 
+      one: "ton"
+      other: "tons"
+    mili: "kg"
+  length:
+    unit: "m"
+    centi: "cm"
+    mili: "mm"
+  order:
+    edit_comments: Modificar els comentaris
+  email_hello: "Buenas tardes %{name},"
+  email_goodbye: "Gracias,\nDavid Muñoz"

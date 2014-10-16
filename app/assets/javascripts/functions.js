@@ -1,29 +1,29 @@
-DATATABLE_PROPS = {
-  language: {
-    "sProcessing":   "Processant...",
-    "sLengthMenu":   "Mostra _MENU_ registres",
-    "sZeroRecords":  "No s'han trobat registres.",
-    "sInfo":         "Mostrant de _START_ a _END_ de _TOTAL_ registres",
-    "sInfoEmpty":    "Mostrant de 0 a 0 de 0 registres",
-    "sInfoFiltered": "(filtrat de _MAX_ total registres)",
-    "sInfoPostFix":  "",
-    "sSearch":       "Filtrar:",
-    "sUrl":          "",
-    "oPaginate": {
-        "sFirst":    "Primer",
-        "sPrevious": "&lt;",
-        "sNext":     "&gt;",
-        "sLast":     "Últim"
-    }
+DATATABLE_LANG_PROPS = {
+  "sProcessing":   "Processant...",
+  "sLengthMenu":   "Mostra _MENU_ registres",
+  "sZeroRecords":  "No s'han trobat registres.",
+  "sInfo":         "Mostrant de _START_ a _END_ de _TOTAL_ registres",
+  "sInfoEmpty":    "Mostrant de 0 a 0 de 0 registres",
+  "sInfoFiltered": "(filtrat de _MAX_ total registres)",
+  "sInfoPostFix":  "",
+  "sSearch":       "Filtrar:",
+  "sUrl":          "",
+  "oPaginate": {
+      "sFirst":    "Primer",
+      "sPrevious": "&lt;",
+      "sNext":     "&gt;",
+      "sLast":     "Últim"
   }
 };
 
 $(function() {
-  $(".datatable").dataTable(DATATABLE_PROPS);
+  $(".datatable.datatable-sort-0-asc").dataTable({"order": [[ 0, "asc" ]],"language": DATATABLE_LANG_PROPS});
+  $(".datatable.datatable-sort-0-desc").dataTable({"order": [[ 0, "desc" ]],"language": DATATABLE_LANG_PROPS});
+  $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
 
   $("select").each(function() {
     if (($(this).parents('.modal').length==0) && ($(this).parents('.dataTables_wrapper').length==0)) {
-      $(this).chosen({disable_search_threshold: 10});
+      $(this).chosen({disable_search_threshold: 10, width: "100%"});
     }
   });
 
@@ -78,4 +78,28 @@ $(function() {
   $('.modal').on('shown.bs.modal', function () {
     $('select', this).chosen({disable_search_threshold: 10});
   });
+
+
+  /* nested_form : limit de number of items */
+  var fieldsCount,
+      $removeLink = $('a.remove_nested_fields');
+
+  function toggleRemoveLink() {
+    $removeLink.toggle(fieldsCount > 1)
+  }
+
+  $(document).on('nested:fieldAdded', function() {
+    fieldsCount += 1;
+    toggleRemoveLink();
+  });
+
+  $(document).on('nested:fieldRemoved', function() {
+    fieldsCount -= 1;
+    toggleRemoveLink();
+  });  
+
+  // count existing nested fields after page was loaded
+  fieldsCount = $('form .fields').length;
+  toggleRemoveLink();
+
 })

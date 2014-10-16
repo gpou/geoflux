@@ -1,15 +1,66 @@
 %tr
   %td.estimate_request_carrier= estimate_request.carrier
   %td.estimate_request_contact= estimate_request.contact
-  %td.estimate_request_state= t(estimate_request.state, :scope => "activerecord.attributes.estimate_request.states")
+  %td.estimate_request_state
+    %span.glyphicon{:class => "glyphicon-state-#{estimate_request.state}"}
+    = t(estimate_request.state, :scope => "activerecord.attributes.estimate_request.states")
   %td.text-center
     .btn-group.btn-group-xs
+      - if not estimate_request.email_like_estimate?
+        %a.tablectrl_small.btn.btn-default.tipS{:href => reload_email_admin_estimate_estimate_request_path(@estimate, estimate_request), :title => t("estimate_request.reload_email_from_estimate"), data: { confirm: t("estimate_request.sure_reload_email_from_estimate")}}
+          %span.glyphicon.glyphicon-warning-sign{:style => "color:orange"}
       %a.tablectrl_small.btn.btn-default.tipS{:href => "#estimate_request", :title => t("helpers.view_model", model: t("activerecord.models.estimate_request", count: 1)), :"data-toggle" => "modal"}
         %span.glyphicon.glyphicon-eye-open
       %a.tablectrl_small.btn.btn-default.tipS{:href => edit_admin_estimate_estimate_request_path(@estimate, estimate_request), :title => t("helpers.edit_model", model: t("activerecord.models.estimate_request", count: 1))}
         %span.glyphicon.glyphicon-pencil
+      %a.tablectrl_small.btn.btn-default.tipS{:href => send_request_admin_estimate_estimate_request_path(@estimate, estimate_request), :title => "send"}
+        %span.glyphicon.glyphicon-envelope
       = link_to admin_estimate_estimate_request_path(@estimate, estimate_request), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.estimate_request", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.estimate_request", count: 1)) do
         %span.glyphicon.glyphicon-remove
-  %td.estimate_request_created_at= estimate_request.created_at
-  %td.estimate_request_updated_at= estimate_request.updated_at
-  %td.estimate_request_email_content= estimate_request.email_content.gsub(/\n/, '<br>')
+      %a.tablectrl_small.btn.btn-default.tipS{"data-toggle" => "dropdown", :href => "#", :title => "State"}
+        %span.glyphicon.glyphicon-cog
+      %ul.dropdown-menu.pull-right
+        %li{:role=>"presentation", :class=>"dropdown-header"}= t("helpers.change_state_to")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "pending")}
+            %span.glyphicon.glyphicon-state-pending
+            = t("activerecord.attributes.estimate_request.states.pending")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "sent")}
+            %span.glyphicon.glyphicon-state-sent
+            = t("activerecord.attributes.estimate_request.states.sent")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "negociating")}
+            %span.glyphicon.glyphicon-state-negociating
+            = t("activerecord.attributes.estimate_request.states.negociating")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "analysing")}
+            %span.glyphicon.glyphicon-state-analysing
+            = t("activerecord.attributes.estimate_request.states.analysing")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "selected")}
+            %span.glyphicon.glyphicon-state-selected
+            = t("activerecord.attributes.estimate_request.states.selected")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "accepted")}
+            %span.glyphicon.glyphicon-state-accepted
+            = t("activerecord.attributes.estimate_request.states.accepted")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "dismissed")}
+            %span.glyphicon.glyphicon-state-dismissed
+            = t("activerecord.attributes.estimate_request.states.dismissed")
+        %li
+          %a{:href => change_state_admin_estimate_estimate_request_path(@estimate, estimate_request, :state => "no-response")}
+            %span.glyphicon.glyphicon-state-no-response
+            = t("activerecord.attributes.estimate_request.states.no_response")
+  %td.estimate_request_created_at= l(estimate_request.created_at)
+  %td.estimate_request_updated_at= l(estimate_request.updated_at)
+  %td.estimate_request_email_subject= estimate_request.email_subject
+  %td.estimate_request_email_content= estimate_request.email_content.blank? ? "&nbsp;" : estimate_request.email_content.gsub(/\n/, '<br>')
+  %td.estimate_request_email_additional_content= estimate_request.email_additional_content.blank? ? "&nbsp;" : estimate_request.email_additional_content.gsub(/\n/, '<br>')
+  %td.estimate_request_comments= estimate_request.comments.blank? ? "&nbsp;" : estimate_request.comments.gsub(/\n/, '<br>')
+  %td.estimate_request_sent_at= estimate_request.sent_at ? l(estimate_request.sent_at) : ""
+  %td.estimate_request_no_response_at= estimate_request.no_response_at ? l(estimate_request.no_response_at) : ""
+  %td.estimate_request_dismissed_at= estimate_request.dismissed_at ? l(estimate_request.dismissed_at) : ""
+  %td.estimate_request_selected_at= estimate_request.selected_at ? l(estimate_request.selected_at) : ""
+  %td.estimate_request_accepted_at= estimate_request.accepted_at ? l(estimate_request.accepted_at) : ""

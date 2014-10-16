@@ -1,19 +1,136 @@
-= f.alert_message flash[:error]
-= f.collection_select :customer_id, Customer.order(:email), :id, :full_name, {include_blank: '', append: link_to("...", admin_customers_path, class: "btn btn-info", title: t("activerecord.models.customer", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.customer_id")}
 = f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
 = f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
 = f.form_group :items, label: { text: t("activerecord.attributes.cvnl.items") } do
+  .form-inline.form-items.form-group{:style => "margin-left:0; margin-right:0; margin-top:5px"}
+    .form-group.col_number_of_items{:style => "width:10%"}= t("activerecord.attributes.cvnl/estimate_items.number_of_items")
+    .form-group{:style => "width:15%"}= t("activerecord.attributes.cvnl/estimate_items.description")
+    .form-group.col_length{:style => "width:12%"}= t("activerecord.attributes.estimate_item.length")
+    .form-group.col_width{:style => "width:12%"}= t("activerecord.attributes.estimate_item.width")
+    .form-group.col_height{:style => "width:12%"}= t("activerecord.attributes.estimate_item.height")
+    .form-group.col_diameter{:style => "width:12%"}= t("activerecord.attributes.estimate_item.diameter")
+    .form-group.col_weight{:style => "width:12%"}= t("activerecord.attributes.estimate_item.weight")
   = f.fields_for :estimate_items, :layout => :inline do |ff|
-    .form-inline.form-items.form-group{:style => "margin-left:0; margin-right:0;"}
-      = ff.text_field :number_of_items, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.cvnl/estimate_items.number_of_items")
+    .form-inline.form-items.form-group.estimate_item{:style => "margin-left:0; margin-right:0;"}
+      = ff.hidden_field :type, :value => "CvnlItem"
+      %div.col-sm-2{:style => "position:absolute; left:-16.66666667%; text-align:right;"}
+        = link_to "#item_settings", :class => "btn btn-info btn-sm tipS", :title => t("estimate_item.settings"), :"data-toggle" => "modal" do
+          %span.glyphicon.glyphicon-cog
+        .item_settings_inputs{:style => "display:none"}
+          = ff.select :quant_type, [[t("activerecord.attributes.estimate_item.quant_type_quant"),"quant"], [t("activerecord.attributes.estimate_item.quant_type_weight"),"weight"]]
+          = ff.select :size_type, [[t("activerecord.attributes.estimate_item.quant_size_cubic"),"cubic"], [t("activerecord.attributes.estimate_item.quant_size_cylindric"),"cylindric"]]
+      .col_number_of_items{:style => "display:inline"}
+        = ff.text_field :number_of_items, hide_label: true, :control_style => "width:10%", :placeholder => t("activerecord.attributes.cvnl/estimate_items.number_of_items")
       = ff.text_field :description, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.cvnl/estimate_items.description")
-      = ff.text_field :length, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.length")
-      = ff.text_field :width, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.width")
-      = ff.text_field :height, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.height")
-      = ff.text_field :weight, hide_label: true, :control_style => "width:15%", :placeholder => t("activerecord.attributes.estimate_item.weight")
+      .col_length{:style => "display:inline"}
+        = ff.text_field :length, hide_label: true, :control_style => "width:12%", :placeholder => t("activerecord.attributes.estimate_item.length")
+      .col_width{:style => "display:inline"}
+        = ff.text_field :width, hide_label: true, :control_style => "width:12%", :placeholder => t("activerecord.attributes.estimate_item.width")
+      .col_height{:style => "display:inline"}
+        = ff.text_field :height, hide_label: true, :control_style => "width:12%", :placeholder => t("activerecord.attributes.estimate_item.height")
+      .col_diameter{:style => "display:inline"}
+        = ff.text_field :diameter, hide_label: true, :control_style => "width:12%", :placeholder => t("activerecord.attributes.estimate_item.diameter")
+      .col_weight{:style => "display:inline"}
+        = ff.text_field :weight, hide_label: true, :control_style => "width:12%", :placeholder => t("activerecord.attributes.estimate_item.weight")
       = ff.link_to_remove class: "btn btn-info pull-right", title: t("helpers.delete") do
         %span.glyphicon.glyphicon-remove
   = f.link_to_add t("activerecord.attributes.cvnl.add_items"), :estimate_items
 
 = f.form_group do
   = f.submit
+  - if !f.object.new_record?
+    = link_to t("helpers.cancel"), admin_estimate_path(@estimate), :class => "btn btn-default"
+
+#item_settings.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+        %h4.modal-title= t("estimate_item.settings")
+      .modal-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.quant_type")
+            .col-sm-8
+              #estimate_item_quant_type
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.size_type")
+            .col-sm-8
+              #estimate_item_size_type
+      .modal-footer
+        %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
+
+
+:javascript
+  function update_item_inputs() {
+    var some_quant_weight = false;
+    var some_quant_num = false;
+    var some_size_cubic = false;
+    var some_size_cylindric = false;
+
+    $(".item_settings_inputs").each(function() {
+      var row = $(this).closest(".fields");
+      var quant_type = $(this).find("select[id*='quant_type']").val();
+      var size_type = $(this).find("select[id*='size_type']").val();
+
+      if ($(this).closest(".fields").is(':visible')) {
+        if (quant_type == "weight") some_quant_weight = true;
+        else some_quant_num = true;
+        if (size_type == "cubic") some_size_cubic = true;
+        else some_size_cylindric = true;
+      }
+
+      if (quant_type=="weight") row.find("input[id*='number_of_items']").hide();
+      else row.find("input[id*='number_of_items']").show();
+
+      if (size_type=="cubic") {
+        row.find("input[id*='diameter']").hide();
+        row.find("input[id*='length']").show();
+        row.find("input[id*='width']").show();
+      } else {
+        row.find("input[id*='diameter']").show();
+        row.find("input[id*='length']").hide();
+        row.find("input[id*='width']").hide();
+      }
+    })
+
+    if (!some_quant_num) $(".col_number_of_items").hide();
+    else $(".col_number_of_items").show();
+    if (!some_size_cubic) $(".col_width").hide();
+    else $(".col_width").show();
+    if (!some_size_cubic) $(".col_length").hide();
+    else $(".col_length").show();
+    if (!some_size_cylindric) $(".col_diameter").hide();
+    else $(".col_diameter").show();
+  }
+
+  $(function() {
+
+    $('#item_settings').on('show.bs.modal', function (e) {
+      var row = $(e.relatedTarget).closest('.estimate_item')
+      row.addClass("current_item");
+      row.find("select[id*='quant_type'], div[id*='quant_type']").appendTo("#estimate_item_quant_type");
+      row.find("select[id*='size_type'], div[id*='size_type']").appendTo("#estimate_item_size_type");
+    })
+
+    $('#item_settings').on('hidden.bs.modal', function (e) {
+      var row = $(".current_item");
+      row.removeClass("current_item");
+      var form_groups = row.find(".item_settings_inputs .form-group")
+      var quant_type = $("#estimate_item_quant_type select[id*='quant_type']").val();
+      var size_type = $("#estimate_item_size_type select[id*='size_type']").val();
+      $("#estimate_item_quant_type select[id*='quant_type'], #estimate_item_quant_type div[id*='quant_type']").appendTo(form_groups[0])
+      $("#estimate_item_size_type select[id*='size_type'], #estimate_item_size_type div[id*='size_type']").appendTo(form_groups[1])
+      update_item_inputs();
+    })
+
+    $(document).on('nested:fieldAdded', function() {
+      update_item_inputs();
+    });
+
+    $(document).on('nested:fieldRemoved', function() {
+      update_item_inputs();
+    });  
+
+    update_item_inputs();
+
+  })

@@ -1,0 +1,17 @@
+= f.alert_message flash[:error]
+
+= f.select :state, [[" " + t("activerecord.attributes.estimate_request.states.pending"),"pending", {:class => "glyphicon glyphicon-state-pending"}], [" " + t("activerecord.attributes.estimate_request.states.sent"),"sent", {:class => "glyphicon glyphicon-state-sent"}], [" " + t("activerecord.attributes.estimate_request.states.negociating"),"negociating", {:class => "glyphicon glyphicon-state-negociating"}], [" " + t("activerecord.attributes.estimate_request.states.analysing"),"analysing", {:class => "glyphicon glyphicon-state-analysing"}], [" " + t("activerecord.attributes.estimate_request.states.selected"),"selected", {:class => "glyphicon glyphicon-state-selected"}], [" " + t("activerecord.attributes.estimate_request.states.accepted"),"accepted", {:class => "glyphicon glyphicon-state-accepted"}], [" " + t("activerecord.attributes.estimate_request.states.no_response"),"no_response", {:class => "glyphicon glyphicon-state-no_response"}], [" " + t("activerecord.attributes.estimate_request.states.dismissed"),"dismissed", {:class => "glyphicon glyphicon-state-dismissed"}] ]
+= f.static_control :carrier, :class => "uneditable-input"
+= f.static_control :contact, :class => "uneditable-input"
+= f.static_control :created_at, :class => "uneditable-input" do
+  = l(f.object.created_at)
+= f.static_control :updated_at, :class => "uneditable-input" do
+  = l(f.object.updated_at)
+= f.text_field :email_subject
+= f.text_area :email_content, :style => "height: 300px"
+= f.text_area :email_additional_content, :style => "height: 150px"
+= f.text_area :comments, :style => "height: 200px"
+
+= f.form_group do
+  = f.submit
+  = link_to t("helpers.cancel"), admin_estimate_path(@estimate), :class => "btn btn-default"

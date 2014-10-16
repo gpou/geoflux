@@ -1,0 +1,5 @@
+%p= I18n.t("email_hello", :name => @estimate_request.contact.first_name).gsub(/\n/, '<br>').html_safe
+
+%p= @estimate_request.email_content.gsub(/\n/, '<br>').html_safe
+
+%p= I18n.t("email_goodbye").gsub(/\n/, '<br>').html_safe

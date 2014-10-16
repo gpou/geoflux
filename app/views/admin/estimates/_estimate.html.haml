@@ -1,11 +1,18 @@
 %tr
-  %td= l(estimate.created_at)
+  %td= l(estimate.created_at, :format => :only_date)
   %td= estimate.type.upcase
-  %td= estimate.customer.full_name
+  %td= estimate.customer
   %td= estimate.origin_port.name
   %td= estimate.destination_port.name
-  %td= t(estimate.state, :scope => "activerecord.attributes.estimate.states")
-  %td= estimate.estimate_requests.count
+  %td
+    %span.glyphicon{:class => "glyphicon-state-#{estimate.state}"}
+    = t(estimate.state, :scope => "activerecord.attributes.estimate.states")
+  %td
+    - estimate.estimate_requests.each do |estimate_request|
+      %div
+        %a{:title => t(estimate_request.state, :scope => "activerecord.attributes.estimate_request.states")}
+          %span.glyphicon{:class => "glyphicon-state-#{estimate_request.state}"}
+        = estimate_request.carrier
   %td.text-center
     .btn-group.btn-group-xs
       %a.tablectrl_small.btn.btn-default.tipS{:href => admin_estimate_path(estimate), :title => t("helpers.view_model", model: t("activerecord.models.estimate", count: 1))}
@@ -14,3 +21,35 @@
         %span.glyphicon.glyphicon-pencil
       = link_to admin_estimate_path(estimate), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.estimate", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.estimate", count: 1)) do
         %span.glyphicon.glyphicon-remove
+      %a.tablectrl_small.btn.btn-default.tipS{"data-toggle" => "dropdown", :href => "#", :title => "State"}
+        %span.glyphicon.glyphicon-cog
+      %ul.dropdown-menu.pull-right
+        %li{:role=>"presentation", :class=>"dropdown-header"}= t("helpers.change_state_to")
+        %li
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "pending")}
+            %span.glyphicon.glyphicon-state-pending
+            = t("activerecord.attributes.estimate.states.pending")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "waiting_estimates")}
+            %span.glyphicon.glyphicon-state-waiting_estimates
+            = t("activerecord.attributes.estimate.states.waiting_estimates")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "analysing")}
+            %span.glyphicon.glyphicon-state-analysing
+            = t("activerecord.attributes.estimate.states.analysing")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "sent_to_customer")}
+            %span.glyphicon.glyphicon-state-sent_to_customer
+            = t("activerecord.attributes.estimate.states.sent_to_customer")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "negociating_with_customer")}
+            %span.glyphicon.glyphicon-state-negociating_with_customer
+            = t("activerecord.attributes.estimate.states.negociating_with_customer")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "confirmed")}
+            %span.glyphicon.glyphicon-state-confirmed
+            = t("activerecord.attributes.estimate.states.confirmed")
+          %a{:href => change_state_admin_estimate_path(estimate, :state => "cancelled")}
+            %span.glyphicon.glyphicon-state-cancelled
+            = t("activerecord.attributes.estimate.states.cancelled")
+      - if estimate.order
+        %a.tablectrl_small.btn.btn-default.tipS{:href => admin_order_path(estimate.order), :title => t("helpers.view_model", model: t("activerecord.models.order", count: 1))}
+          %span.glyphicon.glyphicon-file
+      - elsif estimate.estimate_requests.with_state(:accepted).any?
+        %a.tablectrl_small.btn.btn-default.tipS{:href => save_estimate_admin_orders_path(:estimate_request_id => estimate.estimate_requests.with_state(:accepted).first.id), :title => t("estimate.create_order")}
+          %span.glyphicon.glyphicon-file-new

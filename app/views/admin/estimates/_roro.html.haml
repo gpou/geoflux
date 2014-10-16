@@ -1,16 +1,16 @@
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.customer_id")
   .col-sm-8
-    .form-control= @estimate.customer
+    .form-control= estimate.customer
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin_port_id")
   .col-sm-8
-    .form-control= @estimate.origin_port
+    .form-control= estimate.origin_port
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
   .col-sm-8
-    .form-control= @estimate.destination_port
-- @estimate.estimate_items.each do |estimate_item|
+    .form-control= estimate.destination_port
+- estimate_items.each do |estimate_item|
   %hr
   .form-group
     %label.control-label.col-sm-4= t("activerecord.attributes.roro/estimate_items.number_of_items")
@@ -19,7 +19,7 @@
   .form-group
     %label.control-label.col-sm-4= t("activerecord.attributes.roro/estimate_items.description")
     .col-sm-8
-      .form-control= estimate_item.description
+      .form-control.text= estimate_item.description
   .form-group
     %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.length")
     .col-sm-8

@@ -17,4 +17,5 @@
 //= require chosen.jquery.min
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap
+//= require bootstrap-datepicker.js
 //= require functions

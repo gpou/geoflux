@@ -10,9 +10,10 @@
  *
  *= require_self
  *= require bootstrap
- *= require navbar
+ *= require custom
  *= require chosen.min
  *= require bootstrap-chosen
  *= require bootstrap-dialog
  *= require dataTables.bootstrap
+ *= require datepicker
  */

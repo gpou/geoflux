@@ -77,3 +77,10 @@ namespace :delayed_job do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} rake jobs:clear"
   end
 end
+
+namespace :mailcatcher do
+  desc "start mailcatcher"
+  task :start, :roles => :app, :only => { :primary => true } do
+    run "cd #{current_path} && mailcatcher --http-ip=0.0.0.0"
+  end
+end

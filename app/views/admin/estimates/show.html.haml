@@ -17,6 +17,12 @@
       .panel-body
         .form-horizontal
           .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate.state")
+            .col-sm-8
+              .form-control
+                %span.glyphicon{:class => "glyphicon-state-#{@estimate.state}"}
+                = t(@estimate.state, :scope => "activerecord.attributes.estimate.states")
+          .form-group
             %label.control-label.col-sm-4= t("activerecord.attributes.estimate.created_at")
             .col-sm-8
               .form-control= l(@estimate.created_at)
@@ -24,16 +30,19 @@
             %label.control-label.col-sm-4= t("activerecord.attributes.estimate.updated_at")
             .col-sm-8
               .form-control= l(@estimate.updated_at)
-          != render :partial => "#{@estimate.type.downcase}"
+          != render :partial => "#{@estimate.type.downcase}", :locals => {:estimate => @estimate, :estimate_items => @estimate.estimate_items}
 
   .col-lg-7
     .panel.panel-default
       .panel-heading
         %h3.panel-title
           .btn-group.pull-right
-            = link_to reload_admin_estimate_estimate_requests_path(@estimate), :class => "btn btn-info btn-sm" do
-              %span.glyphicon.glyphicon-refresh
-              = t("helpers.find_model", model: t("activerecord.models.contact", count: 2))
+            - if @contacts.any?
+              = link_to "#estimate_contacts", :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("helpers.find_model", model: t("activerecord.models.contact", count: 2)) do
+                %span.glyphicon.glyphicon-refresh
+            - if @estimate.estimate_requests.with_state(:pending).any?
+              = link_to send_estimate_requests_admin_estimate_path(@estimate), :class => "btn btn-info btn-sm", :title => t("estimate.send_requests") do
+                %span.glyphicon.glyphicon-envelope
           = t("activerecord.models.estimate_request", count: 2)
         .clearfix
       .panel-body
@@ -46,9 +55,154 @@
               %th.text-center= t("helpers.actions")
               %th= t("activerecord.attributes.estimate_request.created_at")
               %th= t("activerecord.attributes.estimate_request.updated_at")
+              %th= t("activerecord.attributes.estimate_request.sent_at")
+              %th= t("activerecord.attributes.estimate_request.no_response_at")
+              %th= t("activerecord.attributes.estimate_request.dismissed_at")
+              %th= t("activerecord.attributes.estimate_request.selected_at")
+              %th= t("activerecord.attributes.estimate_request.accepted_at")
+              %th= t("activerecord.attributes.estimate_request.email_subject")
               %th= t("activerecord.attributes.estimate_request.email_content")
+              %th= t("activerecord.attributes.estimate_request.email_additional_content")
+              %th= t("activerecord.attributes.estimate_request.comments")
           %tbody
             != render :partial => 'estimate_request', :collection => @estimate.estimate_requests
+
+    - if @estimate.order
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            .btn-group.pull-right
+              = link_to admin_order_path(@estimate.order), :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("activerecord.models.order", count: 1) do
+                %span.glyphicon.glyphicon-eye-open
+            = t("activerecord.models.order", count: 1)
+          .clearfix
+        .panel-body
+          .form-horizontal
+            .form-group
+              %label.control-label.col-sm-3= t("activerecord.attributes.order.state")
+              .col-sm-9
+                .form-control
+                  %span.glyphicon{:class => "glyphicon-state-#{@estimate.order.state}"}
+                  = t(@estimate.order.state, :scope => "activerecord.attributes.order.states")
+            .form-group
+              %label.control-label.col-sm-3= t("activerecord.attributes.order.date")
+              .col-sm-9
+                .form-control= l(@estimate.order.date)
+            .form-group
+              %label.control-label.col-sm-3= t("activerecord.attributes.order.reference")
+              .col-sm-9
+                .form-control= @estimate.order.reference
+            .form-group
+              %label.control-label.col-sm-3= t("activerecord.attributes.order.price")
+              .col-sm-9
+                .form-control= @estimate.order.price
+
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to "#estimate_edit_email", :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("estimate.edit_email") do
+              %span.glyphicon.glyphicon-pencil
+            = link_to "#estimate_reload_email", :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("estimate.rebuild_email") do
+              %span.glyphicon.glyphicon-refresh
+          = t("activerecord.attributes.estimate.email")
+        .clearfix
+      .panel-body
+        .form-horizontal
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.estimate.email_subject")
+            .col-sm-9
+              .form-control= @estimate.email_subject
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.estimate.email_content")
+            .col-sm-9
+              .form-control.text= (@estimate.email_content.blank? ? "&nbsp;" : @estimate.email_content.gsub(/\n/, '<br>')).html_safe
+          .form-group
+            %label.control-label.col-sm-3= t("activerecord.attributes.estimate.email_additional_content")
+            .col-sm-9
+              .form-control.text= (@estimate.email_additional_content.blank? ? "&nbsp;" : @estimate.email_additional_content.gsub(/\n/, '<br>')).html_safe
+
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          .btn-group.pull-right
+            = link_to "#estimate_edit_comments", :class => "btn btn-info btn-sm", :"data-toggle" => "modal", :title => t("estimate.edit_comments") do
+              %span.glyphicon.glyphicon-pencil
+          = t("activerecord.attributes.estimate.comments")
+        .clearfix
+      .panel-body
+        .form-horizontal
+          .form-group
+            .col-sm-12
+              .form-control.text= (@estimate.comments.blank? ? "&nbsp;" : @estimate.comments.gsub(/\n/, '<br>')).html_safe
+
+#estimate_edit_email.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      = bootstrap_nested_form_for @estimate, :as => :estimate, :url => update_email_admin_estimate_path(@estimate), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+          %h4.modal-title= t("estimate.edit_email")
+        .modal-body
+          = f.text_field :email_subject
+          = f.text_area :email_content, :style => "height: 250px"
+          = f.text_area :email_additional_content, :style => "height: 150px"
+          = f.form_group do
+            %button{:type=>"submit", :class=>"btn btn-success"}= t("helpers.save")
+            %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.cancel")
+
+#estimate_edit_comments.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      = bootstrap_nested_form_for @estimate, :as => :estimate, :url => update_comments_admin_estimate_path(@estimate), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+          %h4.modal-title= t("estimate.edit_comments")
+        .modal-body
+          = f.text_area :comments, :style => "height: 250px"
+          = f.form_group do
+            %button{:type=>"submit", :class=>"btn btn-success"}= t("helpers.save")
+            %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.cancel")
+
+#estimate_reload_email.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      = bootstrap_nested_form_for @estimate, :as => :estimate, :url => update_email_admin_estimate_path(@estimate), :layout => :horizontal, :label_col => "col-sm-2", :control_col => "col-sm-10", :inline_errors => true, :builder => CustomBootstrapFormBuilder do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+          %h4.modal-title= t("estimate.rebuild_email")
+        .modal-body
+          = f.text_field :email_subject, :value => @estimate.build_email_subject
+          = f.text_area :email_content, :value => @estimate.build_email_content, :style => "height: 250px"
+          = f.text_area :email_additional_content, :style => "height: 150px"
+          = f.form_group do
+            %button{:type=>"submit", :class=>"btn btn-success"}= t("helpers.save")
+            %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.cancel")
+
+#estimate_contacts.modal.fade
+  .modal-dialog.type-info
+    .modal-content
+      = form_for @estimate, :as => :estimate, :url => add_estimate_requests_admin_estimate_path(@estimate) do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} &times;
+          %h4.modal-title= t("estimate.add_requests")
+        .modal-body
+          %table.table.table-hover.table-condensed.table-bordered
+            %thead
+              %tr
+                %th= "#{t("helpers.new")} ?"
+                %th= t("activerecord.attributes.journey_contact.contact")
+                %th= t("activerecord.attributes.journey_contact.carrier")
+            %tbody
+              - @contacts.each do |contact|
+                %tr
+                  %td
+                    %input{:type => "checkbox", :name => "contact_ids[]", :value => contact.id, :checked => true}
+                  %td.estimate_request_carrier= contact.email
+                  %td.estimate_request_carrier= contact.carrier
+        .modal-footer
+          %button{:type=>"submit", :class=>"btn btn-success"}= t("helpers.new")
+          %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
 
 #estimate_request.modal.fade
   .modal-dialog.type-info
@@ -59,6 +213,10 @@
       .modal-body
         .form-horizontal
           .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.state")
+            .col-sm-8
+              .form-control#estimate_request_state
+          .form-group
             %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.created_at")
             .col-sm-8
               .form-control#estimate_request_created_at
@@ -67,9 +225,25 @@
             .col-sm-8
               .form-control#estimate_request_updated_at
           .form-group
-            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.state")
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.sent_at")
             .col-sm-8
-              .form-control#estimate_request_state
+              .form-control#estimate_request_sent_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.no_response_at")
+            .col-sm-8
+              .form-control#estimate_request_no_response_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.dismissed_at")
+            .col-sm-8
+              .form-control#estimate_request_dismissed_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.selected_at")
+            .col-sm-8
+              .form-control#estimate_request_selected_at
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.accepted_at")
+            .col-sm-8
+              .form-control#estimate_request_accepted_at
           .form-group
             %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.carrier")
             .col-sm-8
@@ -79,15 +253,28 @@
             .col-sm-8
               .form-control#estimate_request_contact
           .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.email_subject")
+            .col-sm-8
+              .form-control#estimate_request_email_subject
+          .form-group
             %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.email_content")
             .col-sm-8
               .form-control.text#estimate_request_email_content
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.email_additional_content")
+            .col-sm-8
+              .form-control.text#estimate_request_email_additional_content
+          .form-group
+            %label.control-label.col-sm-4= t("activerecord.attributes.estimate_request.comments")
+            .col-sm-8
+              .form-control.text#estimate_request_comments
       .modal-footer
         %button{:type=>"button", :class=>"btn btn-default", :"data-dismiss"=>"modal"}= t("helpers.close")
 
 :javascript
   $(function() {
-    $(".datatable_custom").dataTable($.extend({}, DATATABLE_PROPS, { "aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 4, 5, 6 ] } ]  }));
+    $(".datatable_custom").dataTable({"order": [[ 0, "asc" ]],"language": DATATABLE_LANG_PROPS, "aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ] } ]});
+
     $('#estimate_request').on('show.bs.modal', function (e) {
       var row = $(e.relatedTarget).closest('tr')
       $("#estimate_request_carrier").html(row.find('.estimate_request_carrier').text())
@@ -95,6 +282,26 @@
       $("#estimate_request_state").html(row.find('.estimate_request_state').text())
       $("#estimate_request_created_at").html(row.find('.estimate_request_created_at').text())
       $("#estimate_request_updated_at").html(row.find('.estimate_request_updated_at').text())
+      $("#estimate_request_sent_at").html(row.find('.estimate_request_sent_at').text())
+      $("#estimate_request_no_response_at").html(row.find('.estimate_request_no_response_at').text())
+      $("#estimate_request_dismissed_at").html(row.find('.estimate_request_dismissed_at').text())
+      $("#estimate_request_selected_at").html(row.find('.estimate_request_selected_at').text())
+      $("#estimate_request_accepted_at").html(row.find('.estimate_request_accepted_at').text())
+      $("#estimate_request_email_subject").html(row.find('.estimate_request_email_subject').text())
       $("#estimate_request_email_content").html(row.find('.estimate_request_email_content').text())
+      $("#estimate_request_email_additional_content").html(row.find('.estimate_request_email_additional_content').text())
+      t = row.find('.estimate_request_comments').text();
+      $("#estimate_request_comments").html(t=="" ? "&nbsp;" : t)
+
+      if ($("#estimate_request_sent_at").html()!="") $("#estimate_request_sent_at").closest(".form-group").show();
+      else $("#estimate_request_sent_at").closest(".form-group").hide();
+      if ($("#estimate_request_no_response_at").html()!="") $("#estimate_request_no_response_at").closest(".form-group").show();
+      else $("#estimate_request_no_response_at").closest(".form-group").hide();
+      if ($("#estimate_request_dismissed_at").html()!="") $("#estimate_request_dismissed_at").closest(".form-group").show();
+      else $("#estimate_request_dismissed_at").closest(".form-group").hide();
+      if ($("#estimate_request_selected_at").html()!="") $("#estimate_request_selected_at").closest(".form-group").show();
+      else $("#estimate_request_selected_at").closest(".form-group").hide();
+      if ($("#estimate_request_accepted_at").html()!="") $("#estimate_request_accepted_at").closest(".form-group").show();
+      else $("#estimate_request_accepted_at").closest(".form-group").hide();
     })
   })

@@ -1,3 +1,5 @@
+include ActionView::Helpers::TextHelper
+
 class Estimate < ActiveRecord::Base
 
   scope :LCL, -> { where(type: 'Lcl') } 
@@ -22,6 +24,7 @@ class Estimate < ActiveRecord::Base
     item.estimate ||= self
   end
 
+  has_one :order
 
 
   # VALIDATIONS ******************************************
@@ -66,30 +69,13 @@ class Estimate < ActiveRecord::Base
   # STATE MACHINE ******************************************
 
   state_machine :state, :initial => :pending do
-    after_transition :on => :send_estimate_requests, :do => :set_sent_estimate_requests_at
-    after_transition :on => :received_estimate_requests, :do => :set_received_estimate_requests_at
-    after_transition :on => :send_to_customer, :do => :set_sent_to_customer_at
-    after_transition :on => :confirm, :do => :set_confirmed_at
-    after_transition :on => :cancel, :do => :set_cancelled_at
-
-    event :send_estimate_requests do
-      transition [:pending] => :waiting_estimates
-    end
-    event :received_estimate_requests do
-      transition [:waiting_estimates] => :analysing
-    end
-    event :send_to_customer do
-      transition [:analysing] => :sent_to_customer
-    end
-    event :negociate do
-      transition [:sent_to_customer] => :negociating_with_customer
-    end
-    event :confirm do
-      transition [:sent_to_customer, :negociating_with_customer] => :confirmed
-    end
-    event :cancel do
-      transition [:sent_to_customer, :negociating_with_customer] => :cancelled
-    end
+    state :pending, :waiting_estimates, :analysing, :sent_to_customer, :negociating_with_customer, :confirmed, :cancelled
+    after_transition any => :waiting_estimates, :do => :set_sent_estimate_requests_at
+    after_transition any => :analysing, :do => :set_received_estimate_requests_at
+    after_transition any => :sent_to_customer, :do => :set_sent_to_customer_at
+    after_transition any => :negociating_with_customer, :do => :set_confirmed_at
+    after_transition any => :confirmed, :do => :set_confirmed_at
+    after_transition any => :cancelled, :do => :set_cancelled_at
   end
 
   def set_sent_estimate_requests_at
@@ -118,6 +104,7 @@ class Estimate < ActiveRecord::Base
   end
 
 
+
   # INITIALIZATIONS ******************************************
 
   after_initialize :init_customer
@@ -126,22 +113,10 @@ class Estimate < ActiveRecord::Base
     self.build_customer if self.customer.nil?
   end
 
-  after_initialize :defaults
-
-  def defaults
-    self.number_of_items ||= 1
-  end
-
-  after_initialize :init_first_item
-
-  def init_first_item
-    self.estimate_items << EstimateItem.new if self.estimate_items.none?
-  end
-
-  after_validation :set_number_of_items
+  after_create :save_email
   
-  def set_number_of_items
-    self.number_of_items = self.estimate_items.sum(:number_of_items)
+  def save_email
+    self.update_columns(:email_content => self.build_email_content, :email_subject => self.build_email_subject) # This will skip validation gracefully.
   end
 
   # PUBLIC METHODS ******************************************
@@ -155,6 +130,10 @@ class Estimate < ActiveRecord::Base
   end
 
   def build_email_content
+    "PENDENT"
+  end
+
+  def build_email_subject
     "PENDENT"
   end
 

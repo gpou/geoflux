@@ -1,0 +1,4 @@
+class FltkItem < EstimateItem
+
+
+end

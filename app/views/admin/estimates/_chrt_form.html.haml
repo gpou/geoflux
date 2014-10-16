@@ -1,5 +1,3 @@
-= f.alert_message flash[:error]
-= f.collection_select :customer_id, Customer.order(:email), :id, :full_name, {include_blank: '', append: link_to("...", admin_customers_path, class: "btn btn-info", title: t("activerecord.models.customer", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.customer_id")}
 = f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
 = f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
 = f.form_group :shipment_type, label: { text: t("activerecord.attributes.estimate.shipment_type") } do
@@ -7,8 +5,8 @@
   = f.radio_button :shipment_type, "regular", label: t("activerecord.attributes.estimate.shipment_type_regular"), inline: true, class: "shipment_type", :checked => f.object.shipment_type=='regular'
 = f.text_field :shipments_per_month, id: "shipments_per_month"
 = f.fields_for :estimate_items do |ff|
-  = ff.text_field :number_of_items, :label => t("activerecord.attributes.chrt/estimate_items.number_of_items")
-  = ff.text_field :weight, :label => t("activerecord.attributes.chrt/estimate_items.weight")
+  = ff.hidden_field :type, :value => "ChrtItem"
+  = ff.text_field :weight, :label => t("activerecord.attributes.chrt/estimate_items.weight"), :append => t("weight.unit.other")
   = ff.text_area :description, :label => t("activerecord.attributes.chrt/estimate_items.description")
 = f.text_field :stowage_factor
 = f.text_field :loading_laytime
@@ -18,6 +16,8 @@
 
 = f.form_group do
   = f.submit
+  - if !f.object.new_record?
+    = link_to t("helpers.cancel"), admin_estimate_path(@estimate), :class => "btn btn-default"
 
 :javascript
   function change_shipment_type() {

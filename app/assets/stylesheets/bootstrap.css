@@ -263,8 +263,13 @@ th {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('fonts/glyphicons-halflings-regular.eot');
-  src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+@font-face {
+  font-family: 'Elusive-Icons';
+  src: url('../fonts/Elusive-Icons.eot');
+  src: url('../fonts/Elusive-Icons.eot?#iefix') format('embedded-opentype'), url('../fonts/Elusive-Icons.woff') format('woff'), url('../fonts/Elusive-Icons.ttf') format('truetype'), url('../fonts/Elusive-Icons.svg#Elusive-Icons') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -278,6 +283,10 @@ th {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.glyphicon.glyphicon-file-new {
+  font-family: 'Elusive-Icons';
+}
+
 .glyphicon-asterisk:before {
   content: "\2a";
 }
@@ -361,6 +370,9 @@ th {
 }
 .glyphicon-file:before {
   content: "\e022";
+}
+.glyphicon-file-new:before {
+  content: "\e0bd";
 }
 .glyphicon-time:before {
   content: "\e023";

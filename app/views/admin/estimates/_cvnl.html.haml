@@ -1,33 +1,40 @@
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.customer_id")
   .col-sm-8
-    .form-control= @estimate.customer
+    .form-control= estimate.customer
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.origin_port_id")
   .col-sm-8
-    .form-control= @estimate.origin_port
+    .form-control= estimate.origin_port
 .form-group
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
   .col-sm-8
-    .form-control= @estimate.destination_port
-- @estimate.estimate_items.each do |estimate_item|
+    .form-control= estimate.destination_port
+- estimate_items.each do |estimate_item|
   %hr
-  .form-group
-    %label.control-label.col-sm-4= t("activerecord.attributes.cvnl/estimate_items.number_of_items")
-    .col-sm-8
-      .form-control= estimate_item.number_of_items
+  - if estimate_item.quant_type=="quant"
+    .form-group
+      %label.control-label.col-sm-4= t("activerecord.attributes.cvnl/estimate_items.number_of_items")
+      .col-sm-8
+        .form-control= estimate_item.number_of_items
   .form-group
     %label.control-label.col-sm-4= t("activerecord.attributes.cvnl/estimate_items.description")
     .col-sm-8
-      .form-control= estimate_item.description
-  .form-group
-    %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.length")
-    .col-sm-8
-      .form-control= estimate_item.length
-  .form-group
-    %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.width")
-    .col-sm-8
-      .form-control= estimate_item.width
+      .form-control.text= estimate_item.description
+  - if estimate_item.size_type=="cubic"
+    .form-group
+      %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.length")
+      .col-sm-8
+        .form-control= estimate_item.length
+    .form-group
+      %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.width")
+      .col-sm-8
+        .form-control= estimate_item.width
+  - else
+    .form-group
+      %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.diameter")
+      .col-sm-8
+        .form-control= estimate_item.diameter
   .form-group
     %label.control-label.col-sm-4= t("activerecord.attributes.estimate_item.height")
     .col-sm-8

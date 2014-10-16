@@ -1,0 +1,26 @@
+body { padding-top: 20px; padding-bottom: 20px; }
+
+.form-horizontal .form-inline .form-group { margin-left:0; margin-right:0;; display: inline-block; }
+.form-horizontal .form-inline .form-group .form-control { width:100%;}
+.form-control.text { height: auto; }
+
+.panel-heading .btn-group.pull-right{ margin-right: -10px; margin-top: -7px; margin-bottom: -10px; }
+
+.glyphicon-state-pending:before { content: "\e165"; color: lightgray; }
+.glyphicon-state-sent:before { content: "\e165"; color: black; }
+.glyphicon-state-negociating:before { content: "\e165"; color: orange; }
+.glyphicon-state-analysing:before { content: "\e165"; color: orange; }
+.glyphicon-state-selected:before { content: "\e165"; color: royalblue; }
+.glyphicon-state-dismissed:before { content: "\e165"; color: red; }
+.glyphicon-state-accepted:before { content: "\e165"; color: lime; }
+.glyphicon-state-no-response:before, .glyphicon-state-no_response:before { content: "\e165"; color: red; }
+
+.glyphicon-state-waiting_estimates:before { content: "\e165"; color: black; }
+.glyphicon-state-sent_to_customer:before { content: "\e165"; color: royalblue; }
+.glyphicon-state-negociating_with_customer:before { content: "\e165"; color: orange; }
+.glyphicon-state-confirmed:before { content: "\e165"; color: lime; }
+.glyphicon-state-cancelled:before { content: "\e165"; color: red; }
+
+.glyphicon-state-started:before { content: "\e165"; color: orange; }
+.glyphicon-state-finished:before { content: "\e165"; color: royalblue; }
+.glyphicon-state-paid:before { content: "\e165"; color: lime; }

@@ -1,16 +1,7 @@
 class Admin::EstimateRequestsController < Admin::AdminController
 
   before_filter :find_estimate
-  before_filter :find_model, :only => %w( show edit update destroy)
-
-  def reload
-    type = @estimate.type.downcase
-    @contacts = Contact.joins(:journey_contacts).where('journey_contacts.origin_port_id' => @estimate.origin_port_id, 'journey_contacts.destination_port_id' => @estimate.destination_port_id, "journey_contacts.#{@estimate.type.downcase}" => true).uniq
-    @contacts.each do |contact|
-      r = @estimate.estimate_requests.create(:contact_id => contact.id, :email_content => @estimate.build_email_content)
-    end
-    redirect_to admin_estimate_path(@estimate)
-  end
+  before_filter :find_model, :except => %w( index )
 
   def index
     @estimate_requests = @estimate.estimate_requests
@@ -35,6 +26,29 @@ class Admin::EstimateRequestsController < Admin::AdminController
     redirect_to admin_estimate_path(@estimate)
   end
 
+  def send_request
+    if @estimate_request.send_request
+      UserMailer.estimate_request(@estimate_request).deliver
+      flash[:success] = t("estimate_request.successfully_sent_request")
+    end
+    redirect_to admin_estimate_path(@estimate)
+  end
+
+  def change_state
+    unless params[:state].blank?
+      @estimate_request.state = params[:state]
+      @estimate_request.save
+    end
+    redirect_to admin_estimate_path(@estimate)
+  end
+
+  def reload_email
+    flash[:success] = t("helpers.successfully_updated")
+    @estimate_request.copy_email_from_estimate
+    redirect_to admin_estimate_path(@estimate)
+  end
+
+
 
   private
 
@@ -47,7 +61,7 @@ class Admin::EstimateRequestsController < Admin::AdminController
     end
 
     def estimate_request_parameters
-      params.require(:estimate_request).permit(:email_content, :comments).merge(:estimate => @estimate)
+      params.require(:estimate_request).permit(:state, :email_subject, :email_content, :email_additional_content, :comments).merge(:estimate => @estimate)
     end
 
 end

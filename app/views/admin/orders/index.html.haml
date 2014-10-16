@@ -1,0 +1,28 @@
+-@page_title = t("activerecord.models.order", count: 2)
+-content_for :breadcrumb do
+  %li.current
+    = t("activerecord.models.order", count: 2)
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title= t("activerecord.models.order", count: 2)
+        .clearfix
+      .panel-body
+        %table.table.table-hover.table-condensed.table-bordered.datatable.datatable-sort-0-desc
+          %thead
+            %tr
+              %th= t("activerecord.attributes.order.date")
+              %th= t("activerecord.attributes.order.reference")
+              %th= t("activerecord.attributes.order.price")
+              %th= t("activerecord.attributes.order.order_type")
+              %th= t("activerecord.attributes.order.customer_id")
+              %th= t("activerecord.attributes.order.carrier_id")
+              %th= t("activerecord.attributes.order.state")
+              %th.text-center= t("helpers.actions")
+          %tbody
+            != render :partial => "order", :collection => @orders
+
+.clear
+

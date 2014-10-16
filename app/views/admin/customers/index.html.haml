@@ -14,12 +14,12 @@
         %h3.panel-title= t("activerecord.models.customer", count: 2)
         .clearfix
       .panel-body
-        %table.table.table-hover.table-condensed.table-bordered.datatable
+        %table.table.table-hover.table-condensed.table-bordered.datatable.datatable-sort-0-asc
           %thead
             %tr
+              %th= t("activerecord.attributes.customer.company")
               %th= t("activerecord.attributes.customer.email")
               %th= t("activerecord.attributes.customer.phone")
-              %th= t("activerecord.attributes.customer.company")
               %th= t("activerecord.attributes.customer.first_name")
               %th= t("activerecord.attributes.customer.last_name")
               %th.text-center= t("helpers.actions")

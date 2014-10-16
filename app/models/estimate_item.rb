@@ -3,32 +3,13 @@ class EstimateItem < ActiveRecord::Base
   belongs_to :estimate
 
 
-  # GENERIC VALIDATIONS ******************************************
-
-  validates :number_of_items, :presence => true, :if => lambda { |e| !e.estimate.is_a?(Fltk) and !e.estimate.is_a?(Chrt) }
-  validates :number_of_items, :numericality => true, :allow_blank => true
   validates :description, :presence => true
+  validates :number_of_items, :numericality => true, :allow_blank => true
+  validates :length, :numericality => true, :allow_blank => true
+  validates :width, :numericality => true, :allow_blank => true
+  validates :height, :numericality => true, :allow_blank => true
+  validates :diameter, :numericality => true, :allow_blank => true
+  validates :weight, :numericality => true, :allow_blank => true
 
-
-  # LCL, RORO, CVNL, CHRT VALIDATIONS ******************************************
-
-  validates :length, :presence => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :length, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :width, :presence => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :width, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :height, :presence => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :height, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) }
-  validates :weight, :presence => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) or e.estimate.is_a?(Chrt) }
-  validates :weight, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Lcl) or e.estimate.is_a?(Roro) or e.estimate.is_a?(Cvnl) or e.estimate.is_a?(Chrt) }
-
-
-  # FCL VALIDATIONS ******************************************
-
-  validates :length, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
-  validates :length, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
-  validates :width, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
-  validates :width, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr) }
-  validates :height, :presence => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr or e.estimate.equipment_20_ot or e.estimate.equipment_40_ot) }
-  validates :height, :numericality => true, :allow_blank => true, :if => lambda { |e| e.estimate.is_a?(Fcl) and e.estimate.oog and (e.estimate.equipment_20_fr or e.estimate.equipment_40_fr or e.estimate.equipment_20_ot or e.estimate.equipment_40_ot) }
 
 end

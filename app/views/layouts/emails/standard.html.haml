@@ -1,0 +1,29 @@
+!!!5
+%html
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
+    %meta{ :content => "fr", "http-equiv" => "Content-Language" }
+    :css
+      .ExternalClass {width:100%;line-height: 100%;} body{margin:0}
+      body, html { font-family: Arial; color:rgb(74,0,130); }
+  %body{ :bgcolor => "#ffffff"}
+    = yield
+
+    %br
+    = image_tag(attachments["logo-geoflux.gif"].url, :alt => "Geoflux", :border=>"0", :style=>"display:block;" )
+    %div{:style => "font-size:0.8em;"}
+      CIF: ESB55044366
+      %br 
+      C/ Lledó, 7 - baixos
+      %br 
+      17743 Vilanant
+      %br 
+      Spain
+      %br 
+      Tel:  +34 972 54 73 23
+      %br 
+      Fax: +34 872 09 90 05
+      %br 
+      %a{:href=>"http://www.geoflux.es", :title=>"Geoflux", :style => "color:rgb(74,0,130)"} http://www.geoflux.es
+      %br 
+      OT: 11729716-1

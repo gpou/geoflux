@@ -25,7 +25,7 @@
               %li{:class => controller_name=='ports' ? "active" : ""}
                 = link_to "Ports", admin_ports_path
               %li{:class => controller_name=='carriers' ? "active" : ""}
-                = link_to "Companyies", admin_carriers_path
+                = link_to "Navieres", admin_carriers_path
               %li{:class => controller_name=='customers' ? "active" : ""}
                 = link_to "Clients", admin_customers_path
               %li.dropdown{:class => controller_name=='estimates' ? "active" : ""}
@@ -48,6 +48,8 @@
                     = link_to "CVNL", new_admin_estimate_path(:type => 'cvnl')
                   %li{:class => (controller_name=='estimates' and params[:type]=='chrt') ? "active" : ""}
                     = link_to "CHRT", new_admin_estimate_path(:type => 'chrt')
+              %li{:class => controller_name=='orders' ? "active" : ""}
+                = link_to "Comandes", admin_orders_path
       %ol.breadcrumb
         %li{ :class => yield(:breadcrumb).empty? ? "current" : ""}
           %a{:href => admin_root_path}= t("home_page")

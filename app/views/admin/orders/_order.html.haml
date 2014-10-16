@@ -1,0 +1,43 @@
+%tr
+  %td= l(order.date)
+  %td= order.reference
+  %td= order.price
+  %td= order.order_type.upcase
+  %td= order.customer
+  %td= order.carrier
+  %td
+    %span.glyphicon{:class => "glyphicon-state-#{order.state}"}
+    = t(order.state, :scope => "activerecord.attributes.order.states")
+
+  %td.text-center
+    .btn-group.btn-group-xs
+      %a.tablectrl_small.btn.btn-default.tipS{:href => admin_order_path(order), :title => t("helpers.view_model", model: t("activerecord.models.order", count: 1))}
+        %span.glyphicon.glyphicon-eye-open
+      %a.tablectrl_small.btn.btn-default.tipS{:href => edit_admin_order_path(order), :title => t("helpers.edit_model", model: t("activerecord.models.order", count: 1))}
+        %span.glyphicon.glyphicon-pencil
+      = link_to admin_order_path(order), :method => :delete, data: { confirm: t("helpers.confirm_delete_model", model: t("activerecord.models.order", count: 1)) }, :class => "tablectrl_small btn btn-default tipS", :title => t("helpers.delete_model", model: t("activerecord.models.order", count: 1)) do
+        %span.glyphicon.glyphicon-remove
+      %a.tablectrl_small.btn.btn-default.tipS{"data-toggle" => "dropdown", :href => "#", :title => "State"}
+        %span.glyphicon.glyphicon-cog
+      %ul.dropdown-menu.pull-right
+        %li{:role=>"presentation", :class=>"dropdown-header"}= t("helpers.change_state_to")
+        %li
+          %a{:href => change_state_admin_order_path(order, :state => "pending")}
+            %span.glyphicon.glyphicon-state-pending
+            = t("activerecord.attributes.order.states.pending")
+        %li
+          %a{:href => change_state_admin_order_path(order, :state => "started")}
+            %span.glyphicon.glyphicon-state-started
+            = t("activerecord.attributes.order.states.started")
+        %li
+          %a{:href => change_state_admin_order_path(order, :state => "finished")}
+            %span.glyphicon.glyphicon-state-finished
+            = t("activerecord.attributes.order.states.finished")
+        %li
+          %a{:href => change_state_admin_order_path(order, :state => "paid")}
+            %span.glyphicon.glyphicon-state-paid
+            = t("activerecord.attributes.order.states.paid")
+        %li
+          %a{:href => change_state_admin_order_path(order, :state => "cancelled")}
+            %span.glyphicon.glyphicon-state-cancelled
+            = t("activerecord.attributes.order.states.cancelled")
