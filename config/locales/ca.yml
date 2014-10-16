@@ -247,7 +247,7 @@ ca:
         one: "Se trataría de un tráfico mensual. "
         other: "Se trataría de %{count} tráficos mensuales. "
       email_content_stowage_factor: "El factor de estiba es de %{stowage_factor}. "
-      email_content_laytime: "El tiempo de plancha es de %{days} días. "
+      email_content_laytime: "El tiempo de plancha es de %{laytime} días. "
       email_content_laytimes: "El tiempo de plancha es de %{loading_laytime} días para la carga y de %{unloading_laytime} días para la descarga. "
     cvnl:
       email_subject: "Precio de %{origin} a %{destination}"
