@@ -8,10 +8,15 @@ Geoflux::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.action_mailer.default_url_options = { :host => 'recipe.geoflux.com' }
-  config.action_mailer.smtp_settings = {
-   :enable_starttls_auto => false
-  }
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  # to use mailcatcher:
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+  
+  #config.action_mailer.default_url_options = { :host => 'recipe.geoflux.com' }
+  #config.action_mailer.smtp_settings = {
+  # :enable_starttls_auto => false
+  #}
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
