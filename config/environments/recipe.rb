@@ -82,9 +82,13 @@ Geoflux::Application.configure do
       :exception_recipients => %w{gemma@ideesenxarxa.com},
       :delivery_method => :smtp,
       :smtp_settings => {
-        :user_name => "admin@provesenxarxa.com",
-        :password => "surdo000-admin-mail",
-        :port => 25
+        address:              'mail.provesenxarxa.com',
+        port:                 25,
+        domain:               'provesenxarxa.com',
+        user_name:            'admin@provesenxarxa.com',
+        password:             'surdo000-admin-mail',
+        authentication:       'plain',
+        enable_starttls_auto: true
       }
     }
 end
