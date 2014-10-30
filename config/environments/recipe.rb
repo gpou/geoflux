@@ -78,7 +78,13 @@ Geoflux::Application.configure do
   config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "[Proves - recipe] ",
-      :sender_address => %{"notifier" <gemma@provesenxarxa.com.com>},
-      :exception_recipients => %w{gemma@ideesenxarxa.com}
+      :sender_address => %{"notifier" <gemma@provesenxarxa.com>},
+      :exception_recipients => %w{gemma@ideesenxarxa.com},
+      :delivery_method => :smtp,
+      :smtp_settings => {
+        :user_name => "admin@provesenxarxa.com",
+        :password => "surdo000-admin-mail",
+        :port => 25
+      }
     }
 end
