@@ -68,7 +68,6 @@ class Admin::EstimatesController < Admin::AdminController
 
 
   def edit
-    hola
     @estimate_type = @estimate.type
   end
 
