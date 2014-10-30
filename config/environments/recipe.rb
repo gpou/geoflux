@@ -78,7 +78,7 @@ Geoflux::Application.configure do
   config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "[Proves - recipe] ",
-      :sender_address => %{"notifier" <gemma@ideesenxarxa.com>},
+      :sender_address => %{"notifier" <gemma@provesenxarxa.com.com>},
       :exception_recipients => %w{gemma@ideesenxarxa.com}
     }
 end
