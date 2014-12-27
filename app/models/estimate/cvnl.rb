@@ -1,5 +1,11 @@
 class Cvnl < Estimate
 
+  after_initialize :defaults
+
+  def defaults
+    self.imo ||= false
+  end
+
   after_initialize :init_first_item
 
   def init_first_item
@@ -8,6 +14,8 @@ class Cvnl < Estimate
 
   #validate :origin_complete
   #validate :destination_complete
+  validates :imo_class, :presence => true, :if => :imo
+  validates :imo_un, :presence => true, :if => :imo
 
   def build_email_content
     if self.estimate_items.count == 1
@@ -37,6 +45,7 @@ class Cvnl < Estimate
         txt << "\n"
         weight = ActionController::Base.helpers.number_to_human(estimate_item.weight, :units => :weight, :precision => 4, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".", :locale => I18n.locale)
         length = ActionController::Base.helpers.number_to_human(estimate_item.length, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+        width = ActionController::Base.helpers.number_to_human(estimate_item.width, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
         height = ActionController::Base.helpers.number_to_human(estimate_item.height, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
         diameter = ActionController::Base.helpers.number_to_human(estimate_item.diameter, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
         if estimate_item.size_type=="cylindric"
@@ -53,6 +62,10 @@ class Cvnl < Estimate
           end
         end
       end
+    end
+    unless not self.imo
+      txt << "\n\n"
+      txt << I18n.t("estimate_request.imo", :imo_class => self.imo_class, :imo_un => self.imo_un)
     end
     txt
   end

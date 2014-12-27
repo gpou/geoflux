@@ -95,6 +95,10 @@ class Fcl < Estimate
       txt << "\n\n"
       txt << I18n.t("estimate_request.fcl.email_destination_address", :address => self.destination_address, :city => self.destination_city, :zip => self.destination_zip, :country => self.destination_country ? self.destination_country.name : "")
     end
+    unless not self.imo
+      txt << "\n\n"
+      txt << I18n.t("estimate_request.imo", :imo_class => self.imo_class, :imo_un => self.imo_un)
+    end
     txt
   end
 

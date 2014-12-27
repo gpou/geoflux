@@ -1,5 +1,12 @@
 = f.grouped_collection_select :origin_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.origin_port_id")}
 = f.grouped_collection_select :destination_port_id, Country.order(:name), :ports, :name, :id, :name, {include_blank: '', append: link_to("...", admin_ports_path, class: "btn btn-info", title: t("activerecord.models.port", count: 2))}, {:"data-placeholder"=> t("placeholders.estimate.destination_port_id")}
+
+= f.form_group :imo, label: { text: t("activerecord.attributes.estimate.imo") } do
+  = f.radio_button :imo, 1, label: t("bool_yes"), inline: true, class: "imo", :checked => f.object.imo
+  = f.radio_button :imo, 0, label: t("bool_no"), inline: true, class: "imo", :checked => !f.object.imo
+= f.text_field :imo_class, class: "imo_true"
+= f.text_field :imo_un, class: "imo_true"
+
 = f.form_group :items, label: { text: t("activerecord.attributes.cvnl.items") } do
   .form-inline.form-items.form-group{:style => "margin-left:0; margin-right:0; margin-top:5px"}
     .form-group.col_number_of_items{:style => "width:10%"}= t("activerecord.attributes.cvnl/estimate_items.number_of_items")
@@ -12,7 +19,15 @@
   = f.fields_for :estimate_items, :layout => :inline do |ff|
     .form-inline.form-items.form-group.estimate_item{:style => "margin-left:0; margin-right:0;"}
       = ff.hidden_field :type, :value => "CvnlItem"
-      %div.col-sm-2{:style => "position:absolute; left:-16.66666667%; text-align:right;"}
+      %div.col-sm-2{:style => "position:absolute; left:-18%; width:18%; text-align:right;"}
+        %div.options{:style => "float:left; font-size:0.9em; line-height:1.2em; text-align:center;"}
+          %span.quant_type_weight{:class => ff.object.quant_type=="weight" ? "option_selected" : ""} Pes
+          = " / "
+          %span.quant_type_quant{:class => ff.object.quant_type=="quant" ? "option_selected" : ""} Bultos
+          %br
+          %span.size_type_cubic{:class => ff.object.size_type=="cubic" ? "option_selected" : ""} Cúbic
+          = " / "
+          %span.size_type_cylindric{:class => ff.object.size_type=="cylindric" ? "option_selected" : ""} Cilíndric
         = link_to "#item_settings", :class => "btn btn-info btn-sm tipS", :title => t("estimate_item.settings"), :"data-toggle" => "modal" do
           %span.glyphicon.glyphicon-cog
         .item_settings_inputs{:style => "display:none"}
@@ -61,6 +76,19 @@
 
 
 :javascript
+  function change_imo() {
+    if($(".imo:checked").val()=="1") {
+      $(".imo_true").each(function() { $(this).parents(".form-group").first().show(); })
+    } else {
+      $(".imo_true").each(function() {$(this).parents(".form-group").first().hide();})
+    }
+  }
+
+  $(function() {
+    $(".imo").change(change_imo);
+    change_imo();
+  })
+
   function update_item_inputs() {
     var some_quant_weight = false;
     var some_quant_num = false;
@@ -79,17 +107,28 @@
         else some_size_cylindric = true;
       }
 
-      if (quant_type=="weight") row.find("input[id*='number_of_items']").hide();
-      else row.find("input[id*='number_of_items']").show();
+      if (quant_type=="weight") {
+        row.find("input[id*='number_of_items']").hide();
+        row.find(".quant_type_weight").addClass("option_selected");
+        row.find(".quant_type_quant").removeClass("option_selected");
+      } else {
+        row.find("input[id*='number_of_items']").show();
+        row.find(".quant_type_weight").removeClass("option_selected");
+        row.find(".quant_type_quant").addClass("option_selected");
+      }
 
       if (size_type=="cubic") {
         row.find("input[id*='diameter']").hide();
         row.find("input[id*='length']").show();
         row.find("input[id*='width']").show();
+        row.find(".size_type_cubic").addClass("option_selected");
+        row.find(".size_type_cylindric").removeClass("option_selected");
       } else {
         row.find("input[id*='diameter']").show();
         row.find("input[id*='length']").hide();
         row.find("input[id*='width']").hide();
+        row.find(".size_type_cubic").removeClass("option_selected");
+        row.find(".size_type_cylindric").addClass("option_selected");
       }
     })
 
@@ -124,6 +163,12 @@
     })
 
     $(document).on('nested:fieldAdded', function() {
+      var new_row =$(".fields:visible").last();
+      var last_row =new_row.prevAll(":visible");
+      var quant_type = last_row.find("select[id*='quant_type']").val();
+      var size_type = last_row.find("select[id*='size_type']").val();
+      new_row.find("select[id*='quant_type']").val(quant_type);
+      new_row.find("select[id*='size_type']").val(size_type);
       update_item_inputs();
     });
 

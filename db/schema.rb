@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015082138) do
+ActiveRecord::Schema.define(version: 20141227135607) do
 
   create_table "cargos", force: true do |t|
     t.string  "type"
@@ -155,7 +155,6 @@ ActiveRecord::Schema.define(version: 20141015082138) do
     t.string   "stowage_factor"
     t.string   "loading_laytime"
     t.string   "unloading_laytime"
-    t.string   "charterer"
     t.text     "comments"
     t.datetime "sent_estimate_requests_at"
     t.datetime "received_estimate_requests_at"
@@ -222,8 +221,8 @@ ActiveRecord::Schema.define(version: 20141015082138) do
     t.integer  "contact_id"
     t.integer  "carrier_id"
     t.string   "reference"
-    t.datetime "date"
-    t.decimal  "price",                    precision: 10, scale: 0
+    t.date     "date"
+    t.decimal  "price",                    precision: 10, scale: 2
     t.string   "state"
     t.integer  "origin_port_id"
     t.integer  "destination_port_id"
@@ -255,7 +254,6 @@ ActiveRecord::Schema.define(version: 20141015082138) do
     t.string   "stowage_factor"
     t.string   "loading_laytime"
     t.string   "unloading_laytime"
-    t.string   "charterer"
     t.string   "email_subject"
     t.text     "email_content"
     t.text     "email_additional_content"

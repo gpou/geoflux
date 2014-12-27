@@ -247,7 +247,6 @@ ca:
         one: "Se trataría de un tráfico mensual. "
         other: "Se trataría de %{count} tráficos mensuales. "
       email_content_stowage_factor: "El factor de estiba es de %{stowage_factor}. "
-      email_content_laytime: "El tiempo de plancha es de %{laytime} días. "
       email_content_laytimes: "El tiempo de plancha es de %{loading_laytime} días para la carga y de %{unloading_laytime} días para la descarga. "
     cvnl:
       email_subject: "Precio de %{origin} a %{destination}"
@@ -270,27 +269,35 @@ ca:
       email_content_item: "%{count} %{description} %{length} largo x %{width} ancho x %{height} alto - %{weight}"
     fcl:
       email_subject: "Precio de %{origin} a %{destination}"
-      email_content: "Por favor, necesito precio %{origin_destination} para %{count_containers} de %{types} con %{description}."
+      email_content: "Por favor, necesito precio %{origin_destination} para %{count_containers} de %{types}. %{description}."
       email_origin_dest: "de %{origin} a %{destination}"
       email_origin_pickup_dest: "de recogida en %{origin} con destino %{destination}"
       email_origin_dest_delivery: "de %{origin} con entrega en %{destination}"
       email_origin_pickup_dest_delivery: "de recogida en %{origin} con entrega en %{destination}"
-      email_origin_address: "La dirección de recogida es:\n %{address}\n% {zip} %{city} (%{country})"
-      email_destination_address: "La dirección de entrega es:\n %{address}\n %{zip} %{city} (%{country})"
+      email_origin_address: "La dirección de recogida es:\n%{address}\n%{zip} %{city} (%{country})"
+      email_destination_address: "La dirección de entrega es:\n%{address}\n%{zip} %{city} (%{country})"
       email_count_containers:
         one: "un contenedor"
         other: "%{count} contenedores"
     lcl:
       email_subject: "Precio de %{origin} a %{destination}"
       email_content: "Por favor, necesito precio %{origin_destination} para %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
+      email_content_cylinder: "Por favor, necesito precio %{origin_destination} para %{count} %{description} de dimensiones Ø%{diameter} x %{height} y %{weight}. %{description2}"
+      email_content_weight: "Por favor, necesito precio %{origin_destination} para %{weight} de %{description}. Las dimensiones son %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
+      email_content_weight_cylinder: "Por favor, necesito precio %{origin_destination} para %{weight} de %{description}. Las dimensiones son Ø%{diameter} x %{height} y %{weight}. %{description2}"
       email_content_multiple: "Por favor, necesito precio %{origin_destination} para:"
-      email_content_item: "- %{count} %{description} de dimensiones %{length} largo x %{width} ancho x %{height} alto y %{weight}. %{description2}"
+      email_content_item_cylinder: "%{count} %{description} Ø%{diameter} x %{height} – %{weight}. %{description2}"
+      email_content_item: "%{count} %{description} %{length} largo x %{width} ancho x %{height} alto – %{weight}. %{description2}"
+      email_content_item_weight_cylinder: "%{weight} de %{description} Ø%{diameter} x %{height}. %{description2}"
+      email_content_item_weight: "%{weight} de %{description} %{length} largo x %{width} ancho x %{height} alto. %{description2}"
+
       email_origin_dest: "de %{origin} a %{destination}"
       email_origin_pickup_dest: "de recogida en %{origin} con destino %{destination}"
       email_origin_dest_delivery: "de %{origin} con entrega en %{destination}"
       email_origin_pickup_dest_delivery: "de recogida en %{origin} con entrega en %{destination}"
       email_origin_address: "La dirección de recogida es:\n %{address}\n %{zip} %{city} (%{country})"
       email_destination_address: "La dirección de entrega es:\n %{address}\n %{zip} %{city} (%{country})"
+    imo: "Mercancía IMO\nClass %{imo_class}\nUN %{imo_un}"
   weight:
     unit: 
       one: "ton"
@@ -300,6 +307,8 @@ ca:
     unit: "m"
     centi: "cm"
     mili: "mm"
+  length_m:
+    unit: "m"
   order:
     edit_comments: Modificar els comentaris
   email_hello: "Buenas tardes %{name},"

@@ -124,7 +124,7 @@ class Admin::EstimatesController < Admin::AdminController
     end
 
     def estimate_parameters
-      params.require(:estimate).permit(:state, :number_of_items, :origin_port_id, :destination_port_id, :customer_id, :origin_address, :origin_city, :origin_zip, :origin_province, :origin_country_id, :destination_address, :destination_city, :destination_zip, :destination_province, :destination_country_id, :description, :shipment_type, :shipments_per_month, :equipment_20_dv, :equipment_20_ot, :equipment_20_rf, :equipment_20_fr, :equipment_40_dv, :equipment_40_hc, :equipment_40_ot, :equipment_40_rf, :equipment_40_fr, :temperature, :imo, :imo_class, :imo_un, :oog, :stowage_factor, :loading_laytime, :unloading_laytime, :charterer, :estimate_items_attributes => [:id, :type, :_destroy, :quant_type, :size_type, :number_of_items, :description, :description2, :length, :width, :height, :diameter, :weight])
+      params.require(:estimate).permit(:state, :number_of_items, :origin_port_id, :destination_port_id, :customer_id, :origin_address, :origin_city, :origin_zip, :origin_province, :origin_country_id, :destination_address, :destination_city, :destination_zip, :destination_province, :destination_country_id, :description, :shipment_type, :shipments_per_month, :equipment_20_dv, :equipment_20_ot, :equipment_20_rf, :equipment_20_fr, :equipment_40_dv, :equipment_40_hc, :equipment_40_ot, :equipment_40_rf, :equipment_40_fr, :temperature, :imo, :imo_class, :imo_un, :oog, :stowage_factor, :loading_laytime, :unloading_laytime, :estimate_items_attributes => [:id, :type, :_destroy, :quant_type, :size_type, :number_of_items, :description, :description2, :length, :width, :height, :diameter, :weight])
     end
 
     def estimate_mail_parameters

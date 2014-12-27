@@ -8,7 +8,7 @@ class CvnlItem < EstimateItem
   end
 
   validates :number_of_items, :presence => true, :if => lambda { |e| e.quant_type=="quant" }
-  validates :weight, :presence => true
+  validates :weight, :presence => true, :if => lambda { |e| e.quant_type=="weight" }
   validates :length, :presence => true, :if => lambda { |e| e.size_type=="cubic" }
   validates :width, :presence => true, :if => lambda { |e| e.size_type=="cubic" }
   validates :diameter, :presence => true, :if => lambda { |e| e.size_type=="cylindric" }

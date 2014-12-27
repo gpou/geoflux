@@ -24,3 +24,7 @@ body { padding-top: 20px; padding-bottom: 20px; }
 .glyphicon-state-started:before { content: "\e165"; color: orange; }
 .glyphicon-state-finished:before { content: "\e165"; color: royalblue; }
 .glyphicon-state-paid:before { content: "\e165"; color: lime; }
+
+.options { color: #aaa; }
+.options span { text-decoration: line-through; }
+.options span.option_selected { color: black; text-decoration:none; }

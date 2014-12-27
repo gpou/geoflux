@@ -24,7 +24,7 @@ class Lcl < Estimate
       if self.destination_city.blank?
         origin_destination = I18n.t("estimate_request.lcl.email_origin_dest", :origin => self.origin_port.name, :destination => self.destination_port.name)
       else
-        origin_destination = I18n.t("estimate_request.lcl.email_origin_dest_delivery", :origin => self.origin_port.name, :destination => self.destination_city)        
+        origin_destination = I18n.t("estimate_request.lcl.email_origin_dest_delivery", :origin => self.origin_port.name, :destination => self.destination_city)
       end
     else
       if self.destination_city.blank?
@@ -38,19 +38,47 @@ class Lcl < Estimate
       txt << "\n"
       self.estimate_items.each do |estimate_item|
         txt << "\n"
+        if estimate_item.size_type=="cylindric"
+          if estimate_item.quant_type=="weight"
+            text = "email_content_item_weight_cylinder"
+          else
+            text = "email_content_item_cylinder"
+          end
+        else
+          if estimate_item.quant_type=="weight"
+            text = "email_content_item_weight"
+          else
+            text = "email_content_item"
+          end
+        end
         weight = ActionController::Base.helpers.number_to_human(estimate_item.weight, :units => :weight, :precision => 4, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".", :locale => I18n.locale)
-        length = ActionController::Base.helpers.number_to_human(estimate_item.length, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
-        width = ActionController::Base.helpers.number_to_human(estimate_item.width, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
-        height = ActionController::Base.helpers.number_to_human(estimate_item.height, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
-        txt << I18n.t("estimate_request.lcl.email_content_item", :count => estimate_item.number_of_items, :description => estimate_item.description, :description2 => estimate_item.description2, :length => length, :width => width, :height => height, :weight => weight)
+        length = ActionController::Base.helpers.number_to_human(estimate_item.length, :units => :length_m, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+        width = ActionController::Base.helpers.number_to_human(estimate_item.width, :units => :length_m, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+        height = ActionController::Base.helpers.number_to_human(estimate_item.height, :units => :length_m, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+        diameter = ActionController::Base.helpers.number_to_human(estimate_item.diameter, :units => :length_m, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+        txt << I18n.t("estimate_request.lcl.#{text}", :origin_destination => origin_destination, :count => estimate_item.number_of_items, :description => estimate_item.description, :description2 => estimate_item.description2, :length => length, :width => width, :height => height, :weight => weight, :diameter => diameter)
       end
     else
       estimate_item = self.estimate_items.first
+      if estimate_item.size_type=="cylindric"
+        if estimate_item.quant_type=="weight"
+          text = "email_content_weight_cylinder"
+        else
+          text = "email_content_cylinder"
+        end
+      else
+        if estimate_item.quant_type=="weight"
+          text = "email_content_weight"
+        else
+          text = "email_content"
+        end
+      end
       weight = ActionController::Base.helpers.number_to_human(estimate_item.weight, :units => :weight, :precision => 4, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".", :locale => I18n.locale)
       length = ActionController::Base.helpers.number_to_human(estimate_item.length, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
       width = ActionController::Base.helpers.number_to_human(estimate_item.width, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
       height = ActionController::Base.helpers.number_to_human(estimate_item.height, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
-      txt = I18n.t("estimate_request.lcl.email_content", :origin_destination => origin_destination, :count => estimate_item.number_of_items, :description => estimate_item.description, :description2 => estimate_item.description2, :length => length, :width => width, :height => height, :weight => weight)
+      diameter = ActionController::Base.helpers.number_to_human(estimate_item.diameter, :units => :length, :precision => 4, :locale => I18n.locale, :strip_insignificant_zeros => true, :delimiter => ",", :separator => ".")
+      txt = I18n.t("estimate_request.lcl.#{text}", :origin_destination => origin_destination, :count => estimate_item.number_of_items, :description => estimate_item.description, :description2 => estimate_item.description2, :length => length, :width => width, :height => height, :weight => weight, :diameter => diameter)
     end
     unless self.origin_address.blank?
       txt << "\n\n"
@@ -59,6 +87,10 @@ class Lcl < Estimate
     unless self.destination_address.blank?
       txt << "\n\n"
       txt << I18n.t("estimate_request.lcl.email_destination_address", :address => self.destination_address, :city => self.destination_city, :zip => self.destination_zip, :country => self.destination_country ? self.destination_country.name : "")
+    end
+    unless not self.imo
+      txt << "\n\n"
+      txt << I18n.t("estimate_request.imo", :imo_class => self.imo_class, :imo_un => self.imo_un)
     end
     txt
   end

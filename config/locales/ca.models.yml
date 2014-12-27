@@ -145,7 +145,6 @@ ca:
         stowage_factor: "Factor d'estiba"
         loading_laytime: "Temps de càrrega"
         unloading_laytime: "Temps de descàrrega"
-        charterer: "Fletador"
         items_different_sizes: "Bultos de diferents mides"
         state: "Estat"
         states:
@@ -284,7 +283,6 @@ ca:
         stowage_factor: "Factor d'estiba"
         loading_laytime: "Temps de càrrega"
         unloading_laytime: "Temps de descàrrega"
-        charterer: "Fletador"
         email_subject: "Tema del missatge"
         email_content: "Cos del missatge"
         email_additional_content: "Text addicional"

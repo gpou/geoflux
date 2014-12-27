@@ -107,7 +107,6 @@ class Order < ActiveRecord::Base
     self.stowage_factor = estimate.stowage_factor
     self.loading_laytime = estimate.loading_laytime
     self.unloading_laytime = estimate.unloading_laytime
-    self.charterer = estimate.charterer
     self.email_subject = estimate_request.email_subject
     self.email_content = estimate_request.email_content
     self.email_additional_content = estimate_request.email_additional_content

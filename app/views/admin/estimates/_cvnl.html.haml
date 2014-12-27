@@ -10,6 +10,23 @@
   %label.control-label.col-sm-4= t("activerecord.attributes.estimate.destination_port_id")
   .col-sm-8
     .form-control= estimate.destination_port
+.form-group
+  %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo")
+  .col-sm-8
+    .form-control
+      - if estimate.imo
+        %span.glyphicon.glyphicon-ok
+      - else
+        %span.glyphicon.glyphicon-remove
+- if estimate.imo
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo_class")
+    .col-sm-8
+      .form-control= estimate.imo_class
+  .form-group
+    %label.control-label.col-sm-4= t("activerecord.attributes.estimate.imo_un")
+    .col-sm-8
+      .form-control= estimate.imo_un
 - estimate_items.each do |estimate_item|
   %hr
   - if estimate_item.quant_type=="quant"
